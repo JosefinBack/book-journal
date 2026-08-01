@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a book</title>
+    <link rel="stylesheet" href="../css/addBook.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <div id="header"></div>
+
+    <main>
+        <img class="pic" id="flowerMain" src="../assets/pic/rankaFlower1.png">
+        <img class="pic" id="leafMain" src="../assets/pic/leafs1.png">
+
+        <img id="dragons" src="../assets/pic/dragons.png">
+
+        <div id="bookMenu">
+            <div id="latestRead">
+                <p>Latest read:</p>
+            </div>
+            <div id="menuButtons">
+
+                <a href="index.html" class="menuButtonStyle">
+                    <p>My books</p>
+                </a>
+
+                <a href="addBook.html" class="menuButtonStyle activeButton">
+                    <p>Add a book</p>
+                </a>
+
+                <button class="menuButtonStyle">
+                    <p>TBR</p>
+                </button>
+
+                <a href="stats.html" class="menuButtonStyle">
+                    <p>Statistics</p>
+                </a>
+            </div>
+        </div>
+
+        <div>
+            <h2>Add a book to your bookshelf</h2>
+            <div id="bookWrapper">
+
+                <div id="boxOne">
+                    <div>
+                        <!-- Öppnar datorns filhantering -->
+                        <input type="file" id="cover" accept="image/*" hidden>
+
+                        <!-- bokomslaget -->
+                        <div id="bookCoverDiv">
+                            <div id="bookCover"></div>
+                            <img id="shelfIMG" src="../assets/pic/shelf.png">
+
+                            <!-- ladda upp bokomslag -->
+                            <button id="uploadButton" type="button">
+                                <p>Upload bookcover</p>
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div id="infoDIV">
+
+                        <!-- bookinfo -->
+                        <img id="bookInfolabel" src="../assets/pic/bookInfo.png" alt="bookInfo label">
+                        <div class="inputDIVcontent" id="bookInfo">
+                            <div class="textAndInput">
+                                <p>Title: </p><input type="text" id="bookTitle">
+                            </div>
+                            <div class="textAndInput">
+                                <p>Author: </p><input type="text" id="author">
+                            </div>
+
+                            <div id="dateAndPage">
+                                <div class="textAndInput">
+                                    <p>Genre: </p><input type="text" id="genre">
+                                </div>
+                                <div class="textAndInput">
+                                    <p>Pages: </p><input type="text" id="pagesInput">
+                                </div>
+                            </div>
+
+                            <div id="dateAndPage">
+                                <div class="textAndInput">
+                                    <p>Start: </p><input type="text" id="startdate">
+                                </div>
+
+                                <div class="textAndInput">
+                                    <p>Finish: </p><input type="text" id="finishdate">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- format -->
+                        <div class="inputDIVcontent" id="formatInfo">
+                            <img id="formatlabel" src="../assets/pic/format.png" alt="format label">
+                            <p>How did you experience this book?</p>
+                            <div id="formats">
+                                <div class="formatDIV">
+                                    <img class="formatIconSize" src="../assets/pic/icons/book.png" alt="book icon">
+                                    <p>Fysical book</p>
+                                    <input type="checkbox" id="fysicalBook">
+                                </div>
+                                <div class="formatDIV">
+                                    <img class="formatIconSize" src="../assets/pic/icons/e-book.png" alt="e-book icon">
+                                    <p>E-book</p>
+                                    <input type="checkbox" id="ebook">
+                                </div>
+                                <div class="formatDIV">
+                                    <img class="formatIconSize" src="../assets/pic/icons/audiobook.png"
+                                        alt="audiobook icon">
+                                    <p>Audiobook</p>
+                                    <input type="checkbox" id="audiobook">
+                                </div>
+                                <div class="formatDIV">
+                                    <img class="formatIconSize" src="../assets/pic/icons/mix.png" alt="mix icon">
+                                    <p>A mix</p>
+                                    <input type="checkbox" id="mix">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="boxTwo">
+                    <!-- rating -->
+                    <div id="ratingBox" class="inputDIVcontent">
+                        <img id="ratingLabel" src="../assets/pic/rating.png" alt="rating label">
+                        <div class="rating">
+                            <p>Story:</p>
+                            <div class="stars" data-category="story">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+
+                        <div class="rating">
+                            <p>Characters:</p>
+                            <div class="stars" data-category="characters">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+
+                        <div class="rating">
+                            <p>Wright style:</p>
+                            <div class="stars" data-category="style">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+
+                        <div class="rating">
+                            <p>Entertaning:</p>
+                            <div class="stars" data-category="fun">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+
+                        <div class="rating">
+                            <p>Ending:</p>
+                            <div class="stars" data-category="ending">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
+                        </div>
+
+
+                        <div class="ratingBook">
+                            <p>Final book rating: </p>
+                            <div class="stars" id="ratingBook" data-category="book">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <!-- <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span> -->
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- bookseries or standalone -->
+                    <div class="inputDIVcontent" id="seriesInfo">
+                        <img id="bookseriesLabel" src="../assets/pic/series.png" alt="bookseries label">
+                        <div>
+                            <div class="seriesInfoDivs">
+                                <p>Is this book part of a series?
+                                </p>
+                                <div>
+                                    <label for="seriesYES">Yes</label>
+                                    <input type="radio" id="seriesYES" name="series" value="yes">
+                                </div>
+                                <div>
+                                    <label for="seriesNO">No</label>
+                                    <input type="radio" id="seriesNO" name="series" value="no">
+                                </div>
+
+                            </div>
+
+                            <div class="seriesInfoDivs">
+                                <p>Series name:</p>
+                                <input type="text" id="seriesname">
+                            </div>
+
+                            <div class="seriesInfoDivs">
+                                <p>How many books does the series have?</p>
+                                <input type="text" id="numberSeries">
+                            </div>
+
+                            <div class="seriesInfoDivs">
+                                <p>Book number in the series:</p><input type="text" id="seriesnumber">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="boxThree">
+                    <!-- final rating -->
+                    <div class="inputDIVcontent" id="finalRating">
+
+                        <div class="ratingDiv">
+                            <p>Do I recommend this book?</p>
+
+                            <div id="radioButtonRek">
+                                <div>
+                                    <label for="rekYes">Yes</label>
+                                    <input type="radio" id="rekYes" name="rek">
+                                </div>
+
+                                <div>
+                                    <label for="rekMeybe">Maybe</label>
+                                    <input type="radio" id="rekMaybe" name="rek">
+                                </div>
+
+                                <div>
+                                    <label for="rekNo">No</label>
+                                    <input type="radio" id="rekNo" name="rek">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <script src="../javascript/addBook.js"></script>
+    <script src="../javascript/books.js"></script>
+</body>
+
+</html>

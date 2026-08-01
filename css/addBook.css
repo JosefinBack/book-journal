@@ -1,0 +1,266 @@
+#bookWrapper {
+    width: 825px;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 40px;
+    box-sizing: border-box;
+}
+
+#bookCover {
+    width: 169px;
+    height: 270px;
+    border: 1px solid black;
+}
+
+.bookCoverSize {
+    height: 270px;
+    object-fit: cover;
+}
+
+#bookCoverDiv {
+    width: 230px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#bookInfolabel {
+    height: 60px;
+    position: absolute;
+    top: -23px;
+    left: 21px;
+}
+
+#bookseriesLabel {
+    height: 60px;
+    position: absolute;
+    top: -40px;
+}
+
+#dateAndPage {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.dateIcon {
+    display: flex;
+}
+
+.dateDIV {
+    display: flex;
+    flex-direction: column;
+}
+
+#formats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.formatDIV {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.formatIconSize {
+    height: 40px;
+    object-fit: contain;
+}
+
+#formatlabel {
+    height: 60px;
+    position: absolute;
+    top: -38.5px;
+    left: 19px;
+}
+
+#formatInfo {
+    position: relative;
+}
+
+#iconCalenderStart,
+#iconCalenderFinish {
+    height: 22px;
+}
+
+#infoDIV {
+    width: 58%;
+    position: relative;
+}
+
+#infoDIV p {
+    margin: 0px;
+}
+
+.inputDIVcontent {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 8px 0px 60px 0px;
+    width: 320px;
+    border: 1px solid var(--dark-green);
+    padding: 40px 25px 25px;
+    border-radius: var(--border-radius-small);
+    background-color: var(--background-gradient-light);
+    box-shadow: 4px 4px 4px 4px #E7D0B5;
+}
+
+input[type="text"] {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+
+    height: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#numberSeries {
+    width: 69px;
+}
+
+#ratingLabel {
+    height: 60px;
+    position: absolute;
+}
+
+.ratingDiv {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#radioButtonRek {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#seriesInfo {
+    position: relative;
+}
+
+.seriesInfoDivs {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: end;
+}
+
+.seriesInfoDivs p {
+    margin: 0px;
+}
+
+
+#shelfIMG {
+    height: 20px;
+    width: 230px;
+}
+
+#seriesname {
+    width: 227px;
+}
+
+#seriesnumber {
+    width: 143px;
+}
+
+.textAndInput {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 7px;
+    align-items: end;
+}
+
+#uploadButton {
+    padding: 5px 25px;
+    border-radius: var(--border-radius-small);
+    font-size: 16px;
+    background-color: var(--background-gradient-light);
+    border: 0.7px solid var(--dark-green);
+    font-family: "Cormorant Garamond";
+    cursor: pointer;
+    margin-top: 15px;
+    font-style: italic;
+}
+
+#uploadButton p {
+    margin: 5px;
+}
+
+#uploadButton:hover {
+    /* transform: translateY(-5px); */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+#boxOne {
+    display: flex;
+    gap: 75px;
+}
+
+#boxTwo {
+    display: flex;
+    gap: 55px;
+}
+
+
+#ratingBook {
+    font-size: 22px;
+}
+
+.ratingBook {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.ratingBook p {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 2px;
+}
+
+
+
+
+.stars {
+    cursor: pointer;
+    font-size: 18px;
+    color: #ccc;
+    /* tomma stjärnor */
+}
+
+.stars .filled {
+    color: gold;
+    /* fyllda stjärnor */
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.rating p {
+    margin: 2px;
+}
+
+#ratingBox {
+    width: 200px;
+    position: relative;
+}
+
+#ratingLabel {
+    height: 70px;
+    position: absolute;
+    top: -37px;
+}

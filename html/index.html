@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <main>
+        <img class="pic" id="flowerMain" src="../assets/pic/rankaFlower1.png">
+        <img class="pic" id="leafMain" src="../assets/pic/leafs1.png">
+
+        <img id="dragons" src="../assets/pic/dragons.png">
+
+
+        <div id="bookMenu">
+            <div id="latestRead">
+                <p>Latest read:</p>
+            </div>
+            <div id="menuButtons">
+
+                <a href="index.html" class="menuButtonStyle activeButton">
+                    <p>My books</p>
+                </a>
+
+                <a href="addBook.html" class="menuButtonStyle">
+                    <p>Add a book</p>
+                </a>
+
+                <button class="menuButtonStyle">
+                    <p>TBR</p>
+                </button>
+
+                <a href="stats.html" class="menuButtonStyle">
+                    <p>Statistics</p>
+                </a>
+            </div>
+        </div>
+
+        <div id="bookshelfMain">
+
+            <div id="topBookshlef">
+                <h2>My bookshelf</h2>
+
+                <div id="searchAndFilter">
+                    <div id="inputDiv">
+                        <input type="text" id="textfield">
+                        <button>Search</button>
+                    </div>
+                    <button>Filter</button>
+                </div>
+            </div>
+
+            <div id="bookshelfContent">
+                <div class="bigDIV">
+                    <div class="rowShelf">
+                        <div class="book"></div>
+                        <div class="book"></div>
+                        <div class="book"></div>
+                        <div class="book"></div>
+                    </div>
+                    <img class="allShelfs" src="../assets/pic/shelf.png">
+                </div>
+
+
+                <div class="bigDIV">
+                    <div class="rowShelf">
+                        <div class="book"></div>
+                        <div class="book"></div>
+                        <div class="book"></div>
+                        <div class="book"></div>
+                    </div>
+                    <img class="allShelfs" src="../assets/pic/shelf.png">
+                </div>
+
+                <div class="bigDIV">
+                    <div class="rowShelf">
+                        <div class="book"></div>
+                        <div class="book"></div>
+                        <div class="book"></div>
+                        <div class="book"></div>
+                    </div>
+                    <img class="allShelfs" src="../assets/pic/shelf.png">
+                </div>
+
+                <div class="bigDIV" id="lastBookDiv">
+                    <div class="rowShelf">
+                        <div class="book"></div>
+                        <div class="book"></div>
+                        <div class="book"></div>
+                        <div class="book"></div>
+                    </div>
+                    <img class="allShelfs" src="../assets/pic/shelf.png">
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer></footer>
+
+    <script src="../javascript/books.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,234 @@
+/* Fonts */
+@font-face {
+    font-family: "Lato light";
+    src: url("../assets/fonts/Lato-Light.ttf");
+}
+
+@font-face {
+    font-family: "Lato Regular";
+    src: url("../assets/fonts/Lato-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Cormorant Garamond";
+    src: url("../assets/fonts/CormorantGaramond-VariableFont_wght.ttf");
+}
+
+:root {
+    /*color*/
+    --dark-green: #5F6443;
+
+    --background-gradient-light: #EEE1D1;
+    --background-gradient-dark: #E7D0B5;
+    --background-main: #eee5d9;
+
+
+    /*border-radius*/
+    --border-radius-small: 10px;
+    --border-radius-medium: 15px;
+    --border-radius-large: 20px;
+
+    /*fonts*/
+    --font-heading: "Lato light";
+    --font-text: "Lato Regular";
+
+    /* fontsize */
+    --font-size-normal: 14px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.allShelfs {
+    width: 600px;
+    height: 20px;
+    position: absolute;
+}
+
+body {
+    margin: 0px;
+    background-image: linear-gradient(to bottom,
+            var(--background-gradient-light),
+            var(--background-gradient-dark));
+}
+
+#bookMenu {
+    height: 700px;
+    width: 25%;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#bookshelfMain {
+    border: 1px solid black;
+    width: 70%;
+    position: relative;
+}
+
+.book {
+    width: 120px;
+    height: 170px;
+    border: 1px solid black;
+}
+
+.bigDIV {
+    position: relative;
+}
+
+#dragons {
+    position: absolute;
+    bottom: 70px;
+    left: 20px;
+    height: 250px;
+}
+
+#header {
+    height: 200px;
+    width: 1100px;
+
+    background-image: url("../assets/pic/test.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 10px auto;
+}
+
+footer {
+    height: 200px;
+    border-top: 1px solid black;
+    margin-top: 100px;
+}
+
+h2 {
+    font-family: var(--font-heading);
+    font-size: 35px;
+    font-weight: 300;
+    margin: 10px;
+}
+
+#inputDiv {
+    display: flex;
+    gap: 15px;
+}
+
+.iconMenuBtn {
+    height: 40px;
+}
+
+#lastBookDiv {
+    margin-bottom: 50px;
+}
+
+#latestRead {
+    height: 200px;
+    padding: 10px;
+    z-index: 10;
+    border: 1px solid black;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+#leafMain {
+    position: absolute;
+    right: 10px;
+}
+
+main {
+    display: flex;
+    justify-content: space-between;
+
+    width: 1100px;
+    height: auto;
+    margin: 0px auto 50px;
+
+    border-radius: var(--border-radius-large);
+    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.4);
+
+    position: relative;
+    background-color: var(--background-main);
+    font-family: "Lato Regular";
+    font-size: var(--font-size-normal);
+}
+
+#menuButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    z-index: 10;
+    margin-top: 70px;
+}
+
+.menuButtonStyle {
+    width: 190px;
+    padding: 10px;
+    border-radius: var(--border-radius-small);
+    font-size: 18px;
+    font-family: "Cormorant Garamond";
+
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.menuButtonStyle p {
+    margin: 0px;
+}
+
+.menuButtonStyle:hover {
+    background-color: var(--dark-green);
+    color: white;
+}
+
+.menuButtonStyle a:hover {
+    color: white;
+}
+
+.menuButtonStyle.activeButton {
+    background-color: var(--dark-green);
+    color: white;
+}
+
+#flowerMain {
+    position: absolute;
+}
+
+.pic {
+    object-fit: contain;
+    width: 100px;
+}
+
+.rowShelf {
+    display: flex;
+    justify-content: space-evenly;
+    width: 600px;
+    margin-top: 65px;
+}
+
+#searchAndFilter {
+    display: flex;
+    justify-content: space-between;
+}
+
+#topBookshlef {
+    height: 110px;
+    border-bottom: 1px solid black;
+    width: 600px;
+    padding: 10px;
+}
+
+#textfield {
+    width: 350px;
+    height: 26px;
+    border-radius: 10px;
+    border: 0.5px solid #DED0BD;
+    background-color: #f9f2e9;
+}
