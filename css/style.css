@@ -34,6 +34,7 @@
 
     /* fontsize */
     --font-size-normal: 14px;
+    --font-size-buttons: 16px;
 }
 
 a {
@@ -42,7 +43,7 @@ a {
 }
 
 .allShelfs {
-    width: 600px;
+    width: 750px;
     height: 20px;
     position: absolute;
 }
@@ -55,18 +56,18 @@ body {
 }
 
 #bookMenu {
-    height: 700px;
-    width: 25%;
     border: 1px solid black;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
 
 #bookshelfMain {
     border: 1px solid black;
-    width: 70%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .book {
@@ -82,7 +83,7 @@ body {
 #dragons {
     position: absolute;
     bottom: 70px;
-    left: 20px;
+    left: 3px;
     height: 250px;
 }
 
@@ -123,11 +124,10 @@ h2 {
 }
 
 #latestRead {
-    height: 200px;
-    padding: 10px;
-    z-index: 10;
+    /* height: 200px; */
+    padding: 5px;
     border: 1px solid black;
-    width: 100%;
+    width: 140px;
     box-sizing: border-box;
 }
 
@@ -139,6 +139,7 @@ h2 {
 
 main {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 
     width: 1100px;
@@ -156,17 +157,16 @@ main {
 
 #menuButtons {
     display: flex;
-    flex-direction: column;
-    gap: 50px;
+    gap: 10px;
+    margin: 70px 50px 30px;
     z-index: 10;
-    margin-top: 70px;
 }
 
 .menuButtonStyle {
-    width: 190px;
+    width: 100px;
     padding: 10px;
     border-radius: var(--border-radius-small);
-    font-size: 18px;
+    font-size: var(--font-size-buttons);
     font-family: "Cormorant Garamond";
 
     background-color: transparent;
@@ -186,6 +186,7 @@ main {
 .menuButtonStyle:hover {
     background-color: var(--dark-green);
     color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .menuButtonStyle a:hover {
@@ -209,24 +210,47 @@ main {
 .rowShelf {
     display: flex;
     justify-content: space-evenly;
-    width: 600px;
+    width: 750px;
     margin-top: 65px;
 }
 
 #searchAndFilter {
-    display: flex;
-    justify-content: space-between;
+    margin: 70px 20px 30px;
+    z-index: 10;
+}
+
+.buttons {
+    padding: 5px 25px;
+    border-radius: var(--border-radius-small);
+    font-size: var(--font-size-buttons);
+    font-style: italic;
+    background-color: var(--background-gradient-light);
+    border: 0.7px solid var(--dark-green);
+    font-family: "Cormorant Garamond";
+    cursor: pointer;
+}
+
+.buttons p {
+    margin: 5px;
+}
+
+.buttons:hover {
+    /* transform: translateY(-5px); */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: var(--dark-green);
+    color: white;
 }
 
 #topBookshlef {
-    height: 110px;
+    height: 150px;
+    display: flex;
+    justify-content: space-around;
     border-bottom: 1px solid black;
-    width: 600px;
+    width: 800px;
     padding: 10px;
 }
 
 #textfield {
-    width: 350px;
     height: 26px;
     border-radius: 10px;
     border: 0.5px solid #DED0BD;

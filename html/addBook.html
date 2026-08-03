@@ -20,11 +20,7 @@
         <img id="dragons" src="../assets/pic/dragons.png">
 
         <div id="bookMenu">
-            <div id="latestRead">
-                <p>Latest read:</p>
-            </div>
             <div id="menuButtons">
-
                 <a href="index.html" class="menuButtonStyle">
                     <p>My books</p>
                 </a>
@@ -40,6 +36,14 @@
                 <a href="stats.html" class="menuButtonStyle">
                     <p>Statistics</p>
                 </a>
+            </div>
+
+            <div id="searchAndFilter">
+                <div id="inputDiv">
+                    <input type="text" id="textfield">
+                    <button class="buttons">Search</button>
+                    <button class="buttons">Filter</button>
+                </div>
             </div>
         </div>
 
@@ -58,7 +62,7 @@
                             <img id="shelfIMG" src="../assets/pic/shelf.png">
 
                             <!-- ladda upp bokomslag -->
-                            <button id="uploadButton" type="button">
+                            <button class="buttons" id="uploadButton" type="button">
                                 <p>Upload bookcover</p>
                             </button>
                         </div>
@@ -66,7 +70,6 @@
 
 
                     <div id="infoDIV">
-
                         <!-- bookinfo -->
                         <img id="bookInfolabel" src="../assets/pic/bookInfo.png" alt="bookInfo label">
                         <div class="inputDIVcontent" id="bookInfo">
@@ -133,64 +136,66 @@
                     <!-- rating -->
                     <div id="ratingBox" class="inputDIVcontent">
                         <img id="ratingLabel" src="../assets/pic/rating.png" alt="rating label">
-                        <div class="rating">
-                            <p>Story:</p>
-                            <div class="stars" data-category="story">
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
+
+                        <div>
+                            <div class="rating">
+                                <p>Story:</p>
+                                <div class="stars" data-category="story">
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                </div>
+                            </div>
+
+                            <div class="rating">
+                                <p>Characters:</p>
+                                <div class="stars" data-category="characters">
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                </div>
+                            </div>
+
+                            <div class="rating">
+                                <p>Wright style:</p>
+                                <div class="stars" data-category="style">
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                </div>
+                            </div>
+
+                            <div class="rating">
+                                <p>Entertaning:</p>
+                                <div class="stars" data-category="fun">
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                </div>
+                            </div>
+
+                            <div class="rating">
+                                <p>Ending:</p>
+                                <div class="stars" data-category="ending">
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                    <span>★</span>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="rating">
-                            <p>Characters:</p>
-                            <div class="stars" data-category="characters">
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                            </div>
-                        </div>
-
-                        <div class="rating">
-                            <p>Wright style:</p>
-                            <div class="stars" data-category="style">
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                            </div>
-                        </div>
-
-                        <div class="rating">
-                            <p>Entertaning:</p>
-                            <div class="stars" data-category="fun">
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                            </div>
-                        </div>
-
-                        <div class="rating">
-                            <p>Ending:</p>
-                            <div class="stars" data-category="ending">
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                                <span>★</span>
-                            </div>
-                        </div>
-
 
                         <div class="ratingBook">
-                            <p>Final book rating: </p>
+                            <p>Final rating:</p>
                             <div class="stars" id="ratingBook" data-category="book">
                                 <span>★</span>
                                 <span>★</span>
@@ -243,9 +248,8 @@
                 </div>
 
                 <div id="boxThree">
-                    <!-- final rating -->
-                    <div class="inputDIVcontent" id="finalRating">
-
+                    <!-- feelings-->
+                    <div class="inputDIVcontent" id="feelingsForBook">
                         <div class="ratingDiv">
                             <p>Do I recommend this book?</p>
 
@@ -266,8 +270,72 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div id="emotionsDiv">
+                            <p>This book made me feel:</p>
+                            <div id="allEmotions">
+
+                                <div>
+                                    <label for="happy">Happy</label>
+                                    <input type="checkbox" name="emotion" id="happy">
+                                </div>
+
+                                <div>
+                                    <label for="sad">Sad</label>
+                                    <input type="checkbox" name="emotion" id="sad">
+                                </div>
+
+                                <div>
+                                    <label for="angry">Angry</label>
+                                    <input type="checkbox" name="emotion" id="angry">
+                                </div>
+
+                                <div>
+                                    <label for="heartbroken">Heartbroken</label>
+                                    <input type="checkbox" name="emotion" id="heartbroken">
+                                </div>
+
+                                <div>
+                                    <label for="inspired">Inspired</label>
+                                    <input type="checkbox" name="emotion" id="inspired">
+                                </div>
+
+                                <div>
+                                    <label for="excited">Excited</label>
+                                    <input type="checkbox" name="emotion" id="excited">
+                                </div>
+
+                                <div>
+                                    <label for="wantMore">Want More</label>
+                                    <input type="checkbox" name="emotion" id="wantMore">
+                                </div>
+
+                                <div>
+                                    <label for="flitry">Flitry</label>
+                                    <input type="checkbox" name="emotion" id="flitry">
+                                </div>
+                            </div>
+                            <div id="otherFeelingsDiv">
+                                <label for="otherFeelings">Other: </label>
+                                <input type="text" name="emotion" id="otherFeelings">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="inputDIVcontent" id="summary">
+                        <p>Summery of the book:</p><textarea id="summary" rows="5" cols="40"
+                            placeholder="Skriv en kort sammanfattning..."></textarea>
                     </div>
                 </div>
+
+                <!-- <div id="boxFour">
+                    
+                    <div class="inputDIVcontent" id="summary">
+                        <p>Summery of the book:</p><textarea id="summary" rows="5" cols="40"
+                            placeholder="Skriv en kort sammanfattning..."></textarea>
+                    </div>
+                </div> -->
 
             </div>
         </div>

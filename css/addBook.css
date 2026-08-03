@@ -1,3 +1,9 @@
+#allEmotions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
 #bookWrapper {
     width: 825px;
     margin-top: 50px;
@@ -39,6 +45,22 @@
     top: -40px;
 }
 
+
+#boxOne {
+    display: flex;
+    gap: 75px;
+}
+
+#boxTwo {
+    display: flex;
+    gap: 55px;
+}
+
+#boxThree {
+    display: flex;
+    gap: 55px;
+}
+
 #dateAndPage {
     display: flex;
     justify-content: space-between;
@@ -52,6 +74,10 @@
 .dateDIV {
     display: flex;
     flex-direction: column;
+}
+
+#feelingsForBook {
+    width: 200px;
 }
 
 #formats {
@@ -123,6 +149,13 @@ input[type="text"] {
     width: 69px;
 }
 
+#otherFeelingsDiv {
+    display: flex;
+    gap: 5px;
+    align-items: end;
+    margin-top: 15px;
+}
+
 #ratingLabel {
     height: 60px;
     position: absolute;
@@ -176,7 +209,7 @@ input[type="text"] {
     align-items: end;
 }
 
-#uploadButton {
+/* #uploadButton {
     padding: 5px 25px;
     border-radius: var(--border-radius-small);
     font-size: 16px;
@@ -186,28 +219,7 @@ input[type="text"] {
     cursor: pointer;
     margin-top: 15px;
     font-style: italic;
-}
-
-#uploadButton p {
-    margin: 5px;
-}
-
-#uploadButton:hover {
-    /* transform: translateY(-5px); */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-
-
-#boxOne {
-    display: flex;
-    gap: 75px;
-}
-
-#boxTwo {
-    display: flex;
-    gap: 55px;
-}
+} */
 
 
 #ratingBook {
@@ -218,18 +230,13 @@ input[type="text"] {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
     margin-top: 10px;
 }
 
 .ratingBook p {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 18px;
     margin: 2px;
 }
-
-
-
 
 .stars {
     cursor: pointer;
