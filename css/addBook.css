@@ -5,7 +5,6 @@
 }
 
 #bookWrapper {
-    width: 825px;
     margin-top: 50px;
     display: flex;
     flex-direction: column;
@@ -30,6 +29,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
 }
 
 #bookInfolabel {
@@ -59,6 +59,12 @@
 #boxThree {
     display: flex;
     gap: 55px;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #dateAndPage {

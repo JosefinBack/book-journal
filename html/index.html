@@ -11,40 +11,15 @@
 <body>
     <div id="header"></div>
 
-    <main>
+    <main id="main">
         <img class="pic" id="flowerMain" src="../assets/pic/rankaFlower1.png">
         <img class="pic" id="leafMain" src="../assets/pic/leafs1.png">
 
         <img id="dragons" src="../assets/pic/dragons.png">
 
 
-        <div id="bookMenu">
-            <div id="menuButtons">
-                <a href="index.html" class="menuButtonStyle">
-                    <p>My books</p>
-                </a>
-
-                <a href="addBook.html" class="menuButtonStyle">
-                    <p>Add a book</p>
-                </a>
-
-                <button class="menuButtonStyle">
-                    <p>TBR</p>
-                </button>
-
-                <a href="stats.html" class="menuButtonStyle">
-                    <p>Statistics</p>
-                </a>
-            </div>
-
-            <div id="searchAndFilter">
-                <div id="inputDiv">
-                    <input type="text" id="textfield">
-                    <button class="buttons">Search</button>
-                    <button class="buttons">Filter</button>
-                </div>
-            </div>
-        </div>
+        <!-- importera menyn från js-fil -->
+        <div id="bookMenu"></div>
 
         <div id="bookshelfMain">
             <h2>My bookshelf</h2>
@@ -111,6 +86,7 @@
 
     <footer></footer>
 
+    <script src="../javascript/menu.js"></script>
     <script src="../javascript/books.js"></script>
 
 </body>
