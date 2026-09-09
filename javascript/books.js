@@ -9,7 +9,7 @@ let supabaseClient = window.supabase.createClient(
 let main = document.querySelector("main");
 let bookshelfContent = document.getElementById("bookshelfContent");
 
-let latestBookRead = document.getElementById("latestBook");
+let latestBookRead = document.getElementById("latestRead");
 
 let buttonSideMenu = document.querySelectorAll(".menuButtonStyle");
 
@@ -34,8 +34,12 @@ function makeBookCard(book) {
     let bookTitle = document.createElement("p");
     bookTitle.textContent = "Bokens titel";
 
+    let bookSerie = document.createElement("p");
+    bookSerie.textContent = "Bokseriens namn här"
+
     let ratingStars = document.createElement("div");
     ratingStars.style.display = "flex";
+    ratingStars.style.justifyContent = "center";
 
     for (let i = 1; i < 6; i++) {
         let star = document.createElement("p");
@@ -46,6 +50,7 @@ function makeBookCard(book) {
 
     bookCard.appendChild(bookIMG);
     bookCard.appendChild(bookTitle);
+    bookCard.appendChild(bookSerie)
     bookCard.appendChild(ratingStars);
 
     book.appendChild(bookCard);
@@ -61,18 +66,9 @@ for (let book of books) {
 
 
 async function latestBook() {
-    const { data: userData } = await supabaseClient.auth.getUser();
-
-    // if (!userData.user) {
-    //     console.log("No user logged in");
-    //     return null;
-    // }
-    let userId = userData.user.id;
-
     let { data: books, error } = await supabaseClient
         .from("books")
         .select("*")
-        .eq("user_id", userId);
 
     if (error) {
         console.error(error);
@@ -90,13 +86,13 @@ async function latestBook() {
     let latestBook = finished[0];
     console.log(latestBook);
 
+
     //Skapa en div med info om boken som ska synas i topDIV
 
     let divBook = document.createElement("div");
-    divBook.classList.add("divBook")
     let pTitle = document.createElement("h4");
     pTitle.textContent = latestBook.title;
-    pTitle.style.fontSize = "20px";
+    pTitle.style.fontSize = "18px";
     pTitle.style.margin = "0px";
 
     let pInfo = null;
@@ -110,11 +106,10 @@ async function latestBook() {
     let pImg = document.createElement("img");
     pImg.src = latestBook.imgsrc;
     pImg.style.height = "150px";
-    pImg.style.width = "100px";
 
     let pRating = document.createElement("p");
-    pRating.style.margin = "0px";
-    pRating.style.fontSize = "18px";
+    pRating.style.marginTop = "15px";
+    pRating.style.fontSize = "14px";
     pRating.style.fontWeight = "bold";
     let text = document.createElement("span");
     text.textContent = `${latestBook.ratings.book}/10 `;
@@ -126,15 +121,66 @@ async function latestBook() {
 
     latestBookRead.innerHTML = "";
     divBook.innerHTML = "";
-    divBook.append(pImg);
-    divBook.append(pTitle);
+
+
+    let bookInfoDiv = document.createElement("div");
+    bookInfoDiv.classList.add("bookInfoDiv");
+    bookInfoDiv.append(pTitle);
 
     if (pInfo) {
-        divBook.append(pInfo);
+        bookInfoDiv.append(pInfo);
     }
 
-    divBook.append(pRating);
-    latestBookRead.append(divBook);
+    bookInfoDiv.append(pRating)
+    latestBookRead.append(pImg, bookInfoDiv);
 
 };
-// latestBook();
+latestBook();
+
+
+
+async function allBooksByYear() {
+    let books = await supabaseClient
+        .from("books")
+        .select("*")
+
+    books = books.data || [];
+    // Bara böcker som är avslutade
+    const finishedBooks = books.filter(book => book.finish);
+
+    // Totalt antal lästa böcker
+    const totalBooks = finishedBooks.length;
+
+    // Räkna per år
+    const booksPerYear = {};
+
+    for (let book of finishedBooks) {
+        const year = book.finish.slice(0, 4);
+        if (!booksPerYear[year]) {
+            booksPerYear[year] = 0;
+        }
+        booksPerYear[year]++;
+    }
+
+    let showBookNumber = document.getElementById("booksRead");
+
+    let BookShlefCount = document.createElement("p");
+    BookShlefCount.classList.add("bookshelfCount")
+    BookShlefCount.innerHTML = `
+       My bookshelf contains <strong>${totalBooks}</strong> books 
+       <br><br>
+   `;
+
+    let pBooksYear = document.createElement("p");
+    pBooksYear.classList.add("booksCountYear");
+    let html = "";
+
+    for (let year in booksPerYear) {
+        html += `<strong>${year}: </strong> ${booksPerYear[year]} books<br>`;
+    }
+    pBooksYear.innerHTML = html;
+
+    showBookNumber.append(BookShlefCount, pBooksYear);
+};
+
+allBooksByYear();
