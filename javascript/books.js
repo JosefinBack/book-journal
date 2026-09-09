@@ -4,12 +4,11 @@ let supabaseClient = window.supabase.createClient(
     "sb_publishable_m1PZazpxmQepEPbktVMzZA_YusPeIWL"
 );
 
-// let currentUser = null;
-
 let main = document.querySelector("main");
 let bookshelfContent = document.getElementById("bookshelfContent");
-
 let latestBookRead = document.getElementById("latestRead");
+
+let rowShelf = document.querySelector(".rowShelf");
 
 let buttonSideMenu = document.querySelectorAll(".menuButtonStyle");
 
@@ -19,50 +18,101 @@ for (let button of buttonSideMenu) {
             button.classList.remove("activeButton");
         }
         button.classList.add("activeButton");
-    });
+    })
 }
 
 
 function makeBookCard(book) {
     let bookCard = document.createElement("div");
+    bookCard.classList.add("book");
 
+    let div1 = document.createElement("div");
+    div1.classList.add("divsInBookCard");
+    div1.style.gap = "4px";
+
+    let div2 = document.createElement("div");
+    div2.classList.add("divsInBookCard");
+
+    bookCard.appendChild(div1);
+    bookCard.appendChild(div2);
+
+    let bookImgDIV = document.createElement("div");
+    bookImgDIV.classList.add("bookImgDIV");
     let bookIMG = document.createElement("img");
-    bookIMG.style.height = "160px";
-    bookIMG.style.width = "130px";
-    bookIMG.style.backgroundColor = "pink";
+    bookIMG.classList.add("imgBookCard");
+    bookIMG.src = book.imgsrc;
+    bookImgDIV.appendChild(bookIMG);
 
     let bookTitle = document.createElement("p");
-    bookTitle.textContent = "Bokens titel";
+    bookTitle.textContent = book.title;
+    bookTitle.style.fontSize = "14px";
 
     let bookSerie = document.createElement("p");
-    bookSerie.textContent = "Bokseriens namn här"
+    bookSerie.textContent = `${book.seriesname} # ${book.seriesnumber}`;
+    bookSerie.style.fontSize = "12px";
+    bookSerie.style.fontStyle = "italic";
 
     let ratingStars = document.createElement("div");
     ratingStars.style.display = "flex";
     ratingStars.style.justifyContent = "center";
 
-    for (let i = 1; i < 6; i++) {
+    for (let i = 1; i < 11; i++) {
         let star = document.createElement("p");
         star.innerHTML = "★";
 
         ratingStars.append(star);
     }
 
-    bookCard.appendChild(bookIMG);
-    bookCard.appendChild(bookTitle);
-    bookCard.appendChild(bookSerie)
-    bookCard.appendChild(ratingStars);
+    div1.appendChild(bookImgDIV);
+    div1.appendChild(bookTitle);
+    div1.appendChild(bookSerie)
+    div2.appendChild(ratingStars);
 
-    book.appendChild(bookCard);
-}
-
-let books = document.querySelectorAll(".book");
-
-for (let book of books) {
-    makeBookCard(book);
+    return bookCard;
 }
 
 
+async function getAllBooks() {
+    let { data: AllBooks, error } = await supabaseClient
+        .from("books")
+        .select("*")
+
+    if (error) {
+        console.error(error);
+        return null;
+    }
+
+    let bookCounter = 0;
+    let currentRow = null;
+
+    for (let oneBook of AllBooks) {
+
+        if (bookCounter % 5 === 0) {
+
+            let bigDIV = document.createElement("div");
+            bigDIV.classList.add("bigDIV");
+
+            currentRow = document.createElement("div");
+            currentRow.classList.add("rowShelf");
+
+            let shelfIMG = document.createElement("img");
+            shelfIMG.classList.add("allShelfs");
+            shelfIMG.src = "../assets/pic/shelf.png";
+
+            bigDIV.appendChild(currentRow);
+            bigDIV.appendChild(shelfIMG);
+
+            bookshelfContent.appendChild(bigDIV);
+        }
+
+        let bookCard = makeBookCard(oneBook);
+        currentRow.appendChild(bookCard);
+
+        bookCounter++;
+    }
+
+}
+getAllBooks();
 
 
 async function latestBook() {
@@ -122,7 +172,6 @@ async function latestBook() {
     latestBookRead.innerHTML = "";
     divBook.innerHTML = "";
 
-
     let bookInfoDiv = document.createElement("div");
     bookInfoDiv.classList.add("bookInfoDiv");
     bookInfoDiv.append(pTitle);
@@ -133,8 +182,7 @@ async function latestBook() {
 
     bookInfoDiv.append(pRating)
     latestBookRead.append(pImg, bookInfoDiv);
-
-};
+}
 latestBook();
 
 
