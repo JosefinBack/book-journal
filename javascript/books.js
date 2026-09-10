@@ -1,4 +1,3 @@
-
 let supabaseClient = window.supabase.createClient(
     "https://qciftuisfloydqxgrdrt.supabase.co",
     "sb_publishable_m1PZazpxmQepEPbktVMzZA_YusPeIWL"
@@ -7,9 +6,10 @@ let supabaseClient = window.supabase.createClient(
 let main = document.querySelector("main");
 let bookshelfContent = document.getElementById("bookshelfContent");
 let latestBookRead = document.getElementById("latestRead");
-
 let rowShelf = document.querySelector(".rowShelf");
 
+
+//Functions
 let buttonSideMenu = document.querySelectorAll(".menuButtonStyle");
 
 for (let button of buttonSideMenu) {
@@ -18,7 +18,7 @@ for (let button of buttonSideMenu) {
             button.classList.remove("activeButton");
         }
         button.classList.add("activeButton");
-    })
+    });
 }
 
 
@@ -48,7 +48,12 @@ function makeBookCard(book) {
     bookTitle.style.fontSize = "14px";
 
     let bookSerie = document.createElement("p");
-    bookSerie.textContent = `${book.seriesname} # ${book.seriesnumber}`;
+
+    if (book.seriesname === null) {
+        bookSerie.textContent = "";
+    } else {
+        bookSerie.textContent = `${book.seriesname} # ${book.seriesnumber}`;
+    }
     bookSerie.style.fontSize = "12px";
     bookSerie.style.fontStyle = "italic";
 
@@ -82,10 +87,17 @@ async function getAllBooks() {
         return null;
     }
 
+    let sortedBooks = sortBooks(AllBooks);
+    createBookshelf(sortedBooks);
+}
+getAllBooks();
+
+
+function createBookshelf(books) {
     let bookCounter = 0;
     let currentRow = null;
 
-    for (let oneBook of AllBooks) {
+    for (let oneBook of books) {
 
         if (bookCounter % 5 === 0) {
 
@@ -110,15 +122,13 @@ async function getAllBooks() {
 
         bookCounter++;
     }
-
 }
-getAllBooks();
 
 
 async function latestBook() {
     let { data: books, error } = await supabaseClient
         .from("books")
-        .select("*")
+        .select("*");
 
     if (error) {
         console.error(error);
@@ -134,11 +144,14 @@ async function latestBook() {
     });
 
     let latestBook = finished[0];
-    console.log(latestBook);
+
+    showLatestBook(latestBook);
+}
+latestBook();
 
 
+function showLatestBook(latestBook) {
     //Skapa en div med info om boken som ska synas i topDIV
-
     let divBook = document.createElement("div");
     let pTitle = document.createElement("h4");
     pTitle.textContent = latestBook.title;
@@ -183,8 +196,6 @@ async function latestBook() {
     bookInfoDiv.append(pRating)
     latestBookRead.append(pImg, bookInfoDiv);
 }
-latestBook();
-
 
 
 async function allBooksByYear() {
@@ -232,3 +243,73 @@ async function allBooksByYear() {
 };
 
 allBooksByYear();
+
+
+function sortBooks(books) {
+    let groups = {};
+
+    // Lägg böckerna i grupper
+    for (let book of books) {
+        let groupName;
+
+        if (book.seriesname) {
+            groupName = book.seriesname;
+        } else {
+            groupName = book.title;
+        }
+
+        if (groups[groupName] === undefined) {
+            groups[groupName] = [];
+        }
+
+        groups[groupName].push(book);
+    }
+
+    // Gör om grupperna till en array
+    let bookGroups = Object.values(groups);
+
+    // Sortera böckerna INUTI varje serie
+    for (let group of bookGroups) {
+
+        if (group[0].seriesname) {
+            group.sort(function (a, b) {
+                return a.seriesnumber - b.seriesnumber;
+            });
+        }
+    }
+
+    // Sortera grupperna efter senaste läsdatum
+    bookGroups.sort(function (a, b) {
+
+        let latestDateA = 0;
+        let latestDateB = 0;
+
+        for (let book of a) {
+            let date = new Date(book.finish).getTime();
+            if (date > latestDateA) {
+                latestDateA = date;
+            }
+        }
+
+        for (let book of b) {
+            let date = new Date(book.finish).getTime();
+
+            if (date > latestDateB) {
+                latestDateB = date;
+            }
+        }
+
+        return latestDateB - latestDateA;
+    });
+
+    // Lägg tillbaka alla böcker i en vanlig array
+    let sortedBooks = [];
+
+    for (let group of bookGroups) {
+
+        for (let book of group) {
+            sortedBooks.push(book);
+        }
+    }
+    return sortedBooks;
+}
