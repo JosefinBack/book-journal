@@ -22,56 +22,119 @@ for (let button of buttonSideMenu) {
 }
 
 
+// function makeBookCard(book) {
+//     let bookCard = document.createElement("div");
+//     bookCard.classList.add("book");
+
+//     let div1 = document.createElement("div");
+//     div1.classList.add("divsInBookCard");
+//     div1.style.gap = "4px";
+
+//     let div2 = document.createElement("div");
+//     div2.classList.add("divsInBookCard");
+
+//     bookCard.appendChild(div1);
+//     bookCard.appendChild(div2);
+
+//     let bookImgDIV = document.createElement("div");
+//     bookImgDIV.classList.add("bookImgDIV");
+//     let bookIMG = document.createElement("img");
+//     bookIMG.classList.add("imgBookCard");
+//     bookIMG.src = book.imgsrc;
+//     bookImgDIV.appendChild(bookIMG);
+
+//     let bookTitle = document.createElement("p");
+//     bookTitle.textContent = book.title;
+//     bookTitle.style.fontSize = "14px";
+
+//     let bookSerie = document.createElement("p");
+
+//     if (book.seriesname === null) {
+//         bookSerie.textContent = "";
+//     } else {
+//         bookSerie.textContent = `${book.seriesname} # ${book.seriesnumber}`;
+//     }
+//     bookSerie.style.fontSize = "12px";
+//     bookSerie.style.fontStyle = "italic";
+
+//     let ratingStars = document.createElement("div");
+//     ratingStars.style.display = "flex";
+//     ratingStars.style.justifyContent = "center";
+
+//     for (let i = 1; i < 11; i++) {
+//         let star = document.createElement("p");
+//         star.innerHTML = "★";
+
+//         ratingStars.append(star);
+//     }
+
+//     div1.appendChild(bookImgDIV);
+//     div1.appendChild(bookTitle);
+//     div1.appendChild(bookSerie)
+//     div2.appendChild(ratingStars);
+
+//     return bookCard;
+// }
+
 function makeBookCard(book) {
     let bookCard = document.createElement("div");
     bookCard.classList.add("book");
 
-    let div1 = document.createElement("div");
-    div1.classList.add("divsInBookCard");
-    div1.style.gap = "4px";
+    // Bokomslag
+    let bookImgDiv = document.createElement("div");
+    bookImgDiv.classList.add("bookImgDIV");
 
-    let div2 = document.createElement("div");
-    div2.classList.add("divsInBookCard");
+    let bookImg = document.createElement("img");
+    bookImg.classList.add("imgBookCard");
+    bookImg.src = book.imgsrc;
+    bookImg.alt = book.title;
 
-    bookCard.appendChild(div1);
-    bookCard.appendChild(div2);
+    bookImgDiv.appendChild(bookImg);
 
-    let bookImgDIV = document.createElement("div");
-    bookImgDIV.classList.add("bookImgDIV");
-    let bookIMG = document.createElement("img");
-    bookIMG.classList.add("imgBookCard");
-    bookIMG.src = book.imgsrc;
-    bookImgDIV.appendChild(bookIMG);
+    // Etikett
+    let bookLabel = document.createElement("div");
+    bookLabel.classList.add("bookLabel");
 
+    // Boktitel
     let bookTitle = document.createElement("p");
+    bookTitle.classList.add("bookTitle");
     bookTitle.textContent = book.title;
-    bookTitle.style.fontSize = "14px";
 
+    // Serie
     let bookSerie = document.createElement("p");
+    bookSerie.classList.add("bookSerie");
 
-    if (book.seriesname === null) {
-        bookSerie.textContent = "";
-    } else {
-        bookSerie.textContent = `${book.seriesname} # ${book.seriesnumber}`;
-    }
-    bookSerie.style.fontSize = "12px";
-    bookSerie.style.fontStyle = "italic";
-
-    let ratingStars = document.createElement("div");
-    ratingStars.style.display = "flex";
-    ratingStars.style.justifyContent = "center";
-
-    for (let i = 1; i < 11; i++) {
-        let star = document.createElement("p");
-        star.innerHTML = "★";
-
-        ratingStars.append(star);
+    if (book.seriesname) {
+        bookSerie.textContent =
+            book.seriesname + " · " + book.seriesnumber;
     }
 
-    div1.appendChild(bookImgDIV);
-    div1.appendChild(bookTitle);
-    div1.appendChild(bookSerie)
-    div2.appendChild(ratingStars);
+    // Betyg
+    let bookRating = document.createElement("p");
+    bookRating.classList.add("bookRating");
+
+    let star = document.createElement("span");
+    star.classList.add("ratingStar");
+    star.textContent = "★";
+
+    let ratingText = document.createElement("span");
+    ratingText.textContent = book.ratings.book + "/10";
+
+    bookRating.append(star, ratingText);
+
+    // Lägg ihop etiketten
+    bookLabel.append(
+        bookTitle,
+        bookSerie,
+        bookRating
+    );
+
+    // Lägg ihop hela boken
+    bookCard.append(
+        bookImgDiv,
+        bookLabel
+    );
+
 
     return bookCard;
 }
@@ -206,8 +269,6 @@ async function allBooksByYear() {
     books = books.data || [];
     // Bara böcker som är avslutade
     const finishedBooks = books.filter(book => book.finish);
-
-    // Totalt antal lästa böcker
     const totalBooks = finishedBooks.length;
 
     // Räkna per år
