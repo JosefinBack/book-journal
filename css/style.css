@@ -90,42 +90,6 @@ body {
     align-items: center;
 }
 
-/* .book {
-    width: 190px;
-    height: 300px;
-    border: 1px solid #ecddca;
-    background-color: rgba(236, 221, 202, 0.4);
-    border-radius: 10px;
-    margin-bottom: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px;
-    box-sizing: border-box;
-} */
-
-/* .book {
-    width: 190px;
-    height: 300px;
-
-    background-color: transparent;
-    border: none;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 5px;
-    box-sizing: border-box;
-
-    transition: transform 0.2s ease;
-}
-
-.book:hover {
-    transform: translateY(-6px);
-} */
 
 .book {
     width: 190px;
@@ -251,27 +215,33 @@ body {
     box-shadow:
         0 2px 6px -3px rgba(60, 50, 35, 0.6);
 
-    /* clip-path: polygon(0 6px,
+    clip-path: polygon(0 6px,
             6px 0,
             calc(100% - 6px) 0,
             100% 6px,
             100% 100%,
-            0 100%); */
+            0 100%);
 }
 
-/* 
-.labelPin {
+.bookLabel::before,
+.bookLabel::after {
+    content: "";
     position: absolute;
-    width: 7px;
-    height: 7px;
-    top: -27px;
-    left: 50%;
-
-    transform: translateX(-50%);
-    border: 1px solid #cfc4ad;
+    width: 5px;
+    height: 5px;
+    top: 6px;
+    background-color: #3f3b35;
     border-radius: 50%;
-    background-color: #f4ead8;
-} */
+}
+
+.bookLabel::before {
+    left: 7px;
+}
+
+.bookLabel::after {
+    right: 7px;
+}
+
 
 .bookTitle {
     margin: 0;
@@ -306,26 +276,6 @@ body {
 }
 
 
-/* .bookImgDIV {
-    height: 200px;
-    width: 140px;
-    margin-top: 10px;
-} */
-
-/* .imgBookCard {
-    object-fit: contain;
-    height: 200px;
-    width: 140px;
-} */
-
-/* .imgBookCard {
-    object-fit: contain;
-    height: 200px;
-    width: 140px;
-
-    filter: drop-shadow(3px 5px 5px rgba(0, 0, 0, 0.25));
-} */
-
 
 footer {
     height: 200px;
@@ -333,11 +283,6 @@ footer {
     margin-top: 100px;
 }
 
-/* h2 {
-    font-family: var(--font-heading);
-    font-size: 35px;
-    font-weight: 300;
-} */
 
 h2 {
     font-family: "Cormorant Garamond";
