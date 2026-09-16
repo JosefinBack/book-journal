@@ -131,8 +131,8 @@ function makeBookCard(book) {
 
     // Lägg ihop hela boken
     bookCard.append(
-        bookImgDiv,
-        bookLabel
+        bookLabel,
+        bookImgDiv
     );
 
 
@@ -213,51 +213,166 @@ async function latestBook() {
 latestBook();
 
 
-function showLatestBook(latestBook) {
-    //Skapa en div med info om boken som ska synas i topDIV
-    let divBook = document.createElement("div");
-    let pTitle = document.createElement("h4");
-    pTitle.textContent = latestBook.title;
-    pTitle.style.fontSize = "18px";
-    pTitle.style.margin = "0px";
+// function showLatestBook(latestBook) {
+//     //Skapa en div med info om boken som ska synas i topDIV
+//     let divBook = document.createElement("div");
+//     let pTitle = document.createElement("h4");
+//     pTitle.textContent = latestBook.title;
+//     pTitle.style.fontSize = "18px";
+//     pTitle.style.margin = "0px";
 
-    let pInfo = null;
+//     let pInfo = null;
+
+//     if (latestBook.seriesname) {
+//         pInfo = document.createElement("p");
+//         pInfo.style.margin = "0px";
+//         pInfo.textContent = `${latestBook.seriesname} (${latestBook.seriesnumber})`;
+//     }
+
+//     let pImg = document.createElement("img");
+//     pImg.src = latestBook.imgsrc;
+//     pImg.style.height = "150px";
+
+//     let pRating = document.createElement("p");
+//     pRating.style.marginTop = "15px";
+//     pRating.style.fontSize = "14px";
+//     pRating.style.fontWeight = "bold";
+//     let text = document.createElement("span");
+//     text.textContent = `${latestBook.ratings.book}/10 `;
+
+//     let star = document.createElement("span");
+//     star.textContent = "★";
+//     star.style.color = "gold";
+//     pRating.append(text, star);
+
+//     latestBookRead.innerHTML = "";
+//     divBook.innerHTML = "";
+
+//     let bookInfoDiv = document.createElement("div");
+//     bookInfoDiv.classList.add("bookInfoDiv");
+//     bookInfoDiv.append(pTitle);
+
+//     if (pInfo) {
+//         bookInfoDiv.append(pInfo);
+//     }
+
+//     bookInfoDiv.append(pRating)
+//     latestBookRead.append(pImg, bookInfoDiv);
+// }
+
+function showLatestBook(latestBook) {
+    latestBookRead.innerHTML = "";
+
+    // Vänster sida - bokomslag
+    let bookCoverDiv = document.createElement("div");
+    bookCoverDiv.classList.add("latestCoverDiv");
+
+    let bookImg = document.createElement("img");
+    bookImg.classList.add("latestCover");
+    bookImg.src = latestBook.imgsrc;
+    bookImg.alt = latestBook.title;
+
+    bookCoverDiv.appendChild(bookImg);
+
+    // Höger sida - information om boken
+    let bookInfoDiv = document.createElement("div");
+    bookInfoDiv.classList.add("latestBookInfo");
+
+    // // Liten rubrik
+    // let latestText = document.createElement("p");
+    // latestText.classList.add("latestText");
+    // latestText.textContent = "LATEST READ"
+
+    // Titel
+    let bookTitle = document.createElement("h3");
+    bookTitle.classList.add("latestTitle");
+    bookTitle.textContent = latestBook.title;
+
+    // Serie
+    let bookSerie = document.createElement("p");
+    bookSerie.classList.add("latestSerie");
 
     if (latestBook.seriesname) {
-        pInfo = document.createElement("p");
-        pInfo.style.margin = "0px";
-        pInfo.textContent = `${latestBook.seriesname} (${latestBook.seriesnumber})`;
+        bookSerie.textContent =
+            latestBook.seriesname + " · " + latestBook.seriesnumber;
     }
 
-    let pImg = document.createElement("img");
-    pImg.src = latestBook.imgsrc;
-    pImg.style.height = "150px";
-
-    let pRating = document.createElement("p");
-    pRating.style.marginTop = "15px";
-    pRating.style.fontSize = "14px";
-    pRating.style.fontWeight = "bold";
-    let text = document.createElement("span");
-    text.textContent = `${latestBook.ratings.book}/10 `;
+    // Rating
+    let bookRating = document.createElement("div");
+    bookRating.classList.add("latestRating");
 
     let star = document.createElement("span");
+    star.classList.add("latestStar");
     star.textContent = "★";
-    star.style.color = "gold";
-    pRating.append(text, star);
 
-    latestBookRead.innerHTML = "";
-    divBook.innerHTML = "";
+    let ratingNumber = document.createElement("span");
+    ratingNumber.textContent = latestBook.ratings.book + "/10";
 
-    let bookInfoDiv = document.createElement("div");
-    bookInfoDiv.classList.add("bookInfoDiv");
-    bookInfoDiv.append(pTitle);
+    bookRating.append(star, ratingNumber);
 
-    if (pInfo) {
-        bookInfoDiv.append(pInfo);
+    // Extra information
+    let extraInfo = document.createElement("div");
+    extraInfo.classList.add("latestExtraInfo");
+
+    // Format
+    let formatDiv = createLatestInfo("FORMAT", latestBook.type);
+
+    // Genre
+    let genreDiv = createLatestInfo("GENRE", latestBook.genre);
+
+    // Startdatum
+    let startDiv = createLatestInfo("STARTED", latestBook.start);
+
+    // Slutdatum
+    let finishDiv = createLatestInfo("FINISHED", latestBook.finish);
+
+    extraInfo.append(
+        formatDiv,
+        genreDiv,
+        startDiv,
+        finishDiv
+    );
+
+
+    // Lägg ihop informationen
+    bookInfoDiv.append(
+        bookTitle,
+        bookSerie,
+        bookRating,
+        extraInfo
+    );
+
+    // Lägg in allt i latestRead
+    latestBookRead.append(
+        bookCoverDiv,
+        bookInfoDiv
+    );
+}
+
+function createLatestInfo(label, value) {
+
+    let infoDiv = document.createElement("div");
+    infoDiv.classList.add("latestInfoItem");
+
+    let infoLabel = document.createElement("p");
+    infoLabel.classList.add("latestInfoLabel");
+    infoLabel.textContent = label;
+
+    let infoValue = document.createElement("p");
+    infoValue.classList.add("latestInfoValue");
+
+    if (value) {
+        infoValue.textContent = value;
+    } else {
+        infoValue.textContent = "—";
     }
 
-    bookInfoDiv.append(pRating)
-    latestBookRead.append(pImg, bookInfoDiv);
+    infoDiv.append(
+        infoLabel,
+        infoValue
+    );
+
+    return infoDiv;
 }
 
 
@@ -288,7 +403,7 @@ async function allBooksByYear() {
     BookShlefCount.classList.add("bookshelfCount")
     BookShlefCount.innerHTML = `
        My bookshelf contains <strong>${totalBooks}</strong> books 
-       <br><br>
+       <br>
    `;
 
     let pBooksYear = document.createElement("p");
@@ -296,10 +411,9 @@ async function allBooksByYear() {
     let html = "";
 
     for (let year in booksPerYear) {
-        html += `<strong>${year}: </strong> ${booksPerYear[year]} books<br>`;
+        html += `<strong>${year}: </strong> ${booksPerYear[year]} books<br><br>`;
     }
     pBooksYear.innerHTML = html;
-
     showBookNumber.append(BookShlefCount, pBooksYear);
 };
 

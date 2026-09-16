@@ -115,17 +115,18 @@ body {
     background-repeat: no-repeat;
     background-position: right;
     width: 600px;
+    padding-left: 25px;
 }
 
 .bookshelfCount {
     margin-top: 61px;
-    margin-left: 110px;
-    font-size: 16px;
+    font-size: 19px;
 }
 
 .booksCountYear {
-    margin-left: 110px;
-    font-size: 14px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 10px 0px;
 }
 
 .bigDIV {
@@ -175,6 +176,7 @@ body {
     max-width: 150px;
     object-fit: contain;
     border-radius: 3px;
+    margin-bottom: 5px;
 
     box-shadow:
         0 1px 2px rgba(50, 45, 35, 0.18),
@@ -199,28 +201,29 @@ body {
 
 .bookLabel {
     position: relative;
-    width: 160px;
+    width: 175px;
     height: 80px;
     margin-top: 10px;
-    padding: 8px 10px;
+    margin-bottom: 5px;
+    padding: 10px 5px;
     box-sizing: border-box;
-    text-align: center;
 
     background: linear-gradient(to bottom,
             #f8f2e7,
             #eee3d1);
 
     border: 1px solid #d2c6ae;
+    border-radius: 10px;
 
     box-shadow:
         0 2px 6px -3px rgba(60, 50, 35, 0.6);
-
+    /* 
     clip-path: polygon(0 6px,
             6px 0,
             calc(100% - 6px) 0,
             100% 6px,
             100% 100%,
-            0 100%);
+            0 100%); */
 }
 
 .bookLabel::before,
@@ -246,8 +249,8 @@ body {
 .bookTitle {
     margin: 0;
     font-family: "Cormorant Garamond";
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 800;
     line-height: 1.1;
 }
 
@@ -305,12 +308,116 @@ h2 {
 }
 
 #latestRead {
-    display: flex;
+    /* display: flex;
     gap: 15px;
     align-items: center;
     margin-right: 25px;
-    height: 270px;
+    height: 270px; */
+
+    width: 500px;
+    display: flex;
+    gap: 25px;
 }
+
+.latestCoverDiv {
+    position: relative;
+    width: 150px;
+    height: 220px;
+    display: flex;
+    justify-content: center;
+}
+
+
+.latestCover {
+    position: relative;
+    height: 170px;
+    max-width: 145px;
+    object-fit: contain;
+    border-radius: 3px;
+
+    box-shadow:
+        0 4px 8px rgba(50, 45, 35, 0.18),
+        0 18px 25px -12px rgba(50, 45, 35, 0.45);
+
+    z-index: 1;
+}
+
+.latestBookInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 400px;
+}
+
+.latestText {
+    margin: 20px 0px;
+    font-family: "Lato Regular";
+    font-size: 15px;
+    letter-spacing: 2px;
+    width: 263px;
+    text-align: center;
+}
+
+.latestTitle {
+    margin: 0;
+    font-family: "Cormorant Garamond";
+    font-size: 27px;
+    font-weight: 500;
+    line-height: 1.05;
+}
+
+.latestSerie {
+    margin: 3px 0 0;
+    font-family: "Cormorant Garamond";
+    font-size: 15px;
+    font-style: italic;
+}
+
+.latestRating {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 10px;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.latestStar {
+    color: #b99a4c;
+    font-size: 17px;
+}
+
+.latestExtraInfo {
+    width: 250px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 15px;
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+}
+
+.latestInfoItem {
+    display: flex;
+    flex-direction: column;
+}
+
+.latestInfoLabel {
+    margin: 0 0 4px;
+    font-family: "Lato Regular";
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--dark-green);
+}
+
+.latestInfoValue {
+    margin: 0;
+    font-family: "Cormorant Garamond";
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--dark-green);
+}
+
 
 
 #leafMain {
@@ -422,7 +529,7 @@ main {
     color: white;
 }
 
-#topBookshlef {
+#topBookshelf {
     height: 300px;
     display: flex;
     justify-content: center;
@@ -433,7 +540,6 @@ main {
     border: 1px solid rgba(95, 100, 67, 0.15);
     border-radius: 20px;
     border-bottom: none;
-
 }
 
 #textfield {
