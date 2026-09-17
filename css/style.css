@@ -152,6 +152,37 @@ body {
     align-items: center;
 }
 
+#sortMeny {
+    position: relative;
+}
+
+#dropDownSort {
+    display: none;
+    position: absolute;
+    top: 42px;
+    left: 0;
+
+    z-index: 100;
+
+    width: 190px;
+    padding: 10px;
+    background: linear-gradient(to bottom,
+            #faf5eb,
+            #eee3d1);
+    border: 1px solid #d2c6ae;
+    border-radius: 8px;
+    box-shadow:
+        0 8px 20px rgba(60, 50, 35, 0.15);
+}
+
+#dropDownSort.showSortMenu {
+    display: block;
+}
+
+.divSort {
+    border: 1px solid black;
+}
+
 #header {
     height: 200px;
     width: 1200px;
@@ -486,6 +517,55 @@ main {
     color: white;
 }
 
+
+.menyButton {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    height: 36px;
+    padding: 0 15px;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    font-family: "Lato Regular";
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--dark-green);
+    cursor: pointer;
+    transition:
+        background-color 0.2s,
+        transform 0.2s;
+}
+
+.menyButton:hover {
+    background-color: var(--soft-green);
+}
+
+.menyButton:active {
+    transform: translateY(1px);
+}
+
+.menuIcon {
+    font-size: 14px;
+}
+
+.menyButton p {
+    margin: 0;
+}
+
+#sortMeny {
+    display: flex;
+    gap: 8px;
+
+    width: 1000px;
+
+    margin-top: 45px;
+    padding-bottom: 10px;
+
+    border-bottom: 1px solid var(--border-color);
+}
+
 #flowerMain {
     position: absolute;
 }
@@ -547,4 +627,8 @@ main {
     border-radius: 10px;
     border: 0.5px solid #DED0BD;
     background-color: #f9f2e9;
+}
+
+#sortContainer {
+    position: relative;
 }

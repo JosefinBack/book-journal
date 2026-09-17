@@ -8,6 +8,18 @@ let bookshelfContent = document.getElementById("bookshelfContent");
 let latestBookRead = document.getElementById("latestRead");
 let rowShelf = document.querySelector(".rowShelf");
 
+let buttonSort = document.getElementById("buttonSort");
+let dropDownSort = document.getElementById("dropDownSort");
+
+let buttonFilter = document.getElementById("buttonFilter");
+
+
+//AddEventListener
+
+buttonSort.addEventListener("click", function () {
+    dropDownSort.classList.toggle("showSortMenu");
+});
+
 
 //Functions
 let buttonSideMenu = document.querySelectorAll(".menuButtonStyle");
@@ -20,61 +32,6 @@ for (let button of buttonSideMenu) {
         button.classList.add("activeButton");
     });
 }
-
-
-// function makeBookCard(book) {
-//     let bookCard = document.createElement("div");
-//     bookCard.classList.add("book");
-
-//     let div1 = document.createElement("div");
-//     div1.classList.add("divsInBookCard");
-//     div1.style.gap = "4px";
-
-//     let div2 = document.createElement("div");
-//     div2.classList.add("divsInBookCard");
-
-//     bookCard.appendChild(div1);
-//     bookCard.appendChild(div2);
-
-//     let bookImgDIV = document.createElement("div");
-//     bookImgDIV.classList.add("bookImgDIV");
-//     let bookIMG = document.createElement("img");
-//     bookIMG.classList.add("imgBookCard");
-//     bookIMG.src = book.imgsrc;
-//     bookImgDIV.appendChild(bookIMG);
-
-//     let bookTitle = document.createElement("p");
-//     bookTitle.textContent = book.title;
-//     bookTitle.style.fontSize = "14px";
-
-//     let bookSerie = document.createElement("p");
-
-//     if (book.seriesname === null) {
-//         bookSerie.textContent = "";
-//     } else {
-//         bookSerie.textContent = `${book.seriesname} # ${book.seriesnumber}`;
-//     }
-//     bookSerie.style.fontSize = "12px";
-//     bookSerie.style.fontStyle = "italic";
-
-//     let ratingStars = document.createElement("div");
-//     ratingStars.style.display = "flex";
-//     ratingStars.style.justifyContent = "center";
-
-//     for (let i = 1; i < 11; i++) {
-//         let star = document.createElement("p");
-//         star.innerHTML = "★";
-
-//         ratingStars.append(star);
-//     }
-
-//     div1.appendChild(bookImgDIV);
-//     div1.appendChild(bookTitle);
-//     div1.appendChild(bookSerie)
-//     div2.appendChild(ratingStars);
-
-//     return bookCard;
-// }
 
 function makeBookCard(book) {
     let bookCard = document.createElement("div");
@@ -134,7 +91,6 @@ function makeBookCard(book) {
         bookLabel,
         bookImgDiv
     );
-
 
     return bookCard;
 }
@@ -278,11 +234,6 @@ function showLatestBook(latestBook) {
     let bookInfoDiv = document.createElement("div");
     bookInfoDiv.classList.add("latestBookInfo");
 
-    // // Liten rubrik
-    // let latestText = document.createElement("p");
-    // latestText.classList.add("latestText");
-    // latestText.textContent = "LATEST READ"
-
     // Titel
     let bookTitle = document.createElement("h3");
     bookTitle.classList.add("latestTitle");
@@ -313,17 +264,9 @@ function showLatestBook(latestBook) {
     // Extra information
     let extraInfo = document.createElement("div");
     extraInfo.classList.add("latestExtraInfo");
-
-    // Format
     let formatDiv = createLatestInfo("FORMAT", latestBook.type);
-
-    // Genre
     let genreDiv = createLatestInfo("GENRE", latestBook.genre);
-
-    // Startdatum
     let startDiv = createLatestInfo("STARTED", latestBook.start);
-
-    // Slutdatum
     let finishDiv = createLatestInfo("FINISHED", latestBook.finish);
 
     extraInfo.append(
@@ -333,16 +276,12 @@ function showLatestBook(latestBook) {
         finishDiv
     );
 
-
-    // Lägg ihop informationen
     bookInfoDiv.append(
         bookTitle,
         bookSerie,
         bookRating,
         extraInfo
     );
-
-    // Lägg in allt i latestRead
     latestBookRead.append(
         bookCoverDiv,
         bookInfoDiv
@@ -375,6 +314,11 @@ function createLatestInfo(label, value) {
     return infoDiv;
 }
 
+
+
+
+
+//Sortering
 
 async function allBooksByYear() {
     let books = await supabaseClient
@@ -421,70 +365,212 @@ allBooksByYear();
 
 
 function sortBooks(books) {
+    // Här skapar vi ett tomt objekt som ska innehålla våra grupper.
+    // Exempel på hur objektet kan se ut senare:
+    // {
+    //     "Ironside Academy": [Plier, Tourner, Relever],
+    //     "Ruthless Boys": [bok 1, bok 2, bok 3],
+    //     "For the Fans": [For the Fans]
+    // }
+    // Serier grupperas efter seriesname.
+    // Böcker utan serie får en egen grupp med bokens titel som namn.
     let groups = {};
 
-    // Lägg böckerna i grupper
+
+    // Gå igenom alla böcker från databasen.
     for (let book of books) {
         let groupName;
 
+        // Om boken tillhör en serie använder vi serienamnet
+        // som namn på gruppen.
         if (book.seriesname) {
             groupName = book.seriesname;
-        } else {
+        }
+
+        // Om boken INTE tillhör en serie använder vi istället
+        // boktiteln som gruppnamn. På så sätt får även fristående böcker en egen grupp.
+        else {
             groupName = book.title;
         }
 
+        // Om gruppen inte redan finns skapar vi den.
+        //Exempel: groups["Ironside Academy"] = [];
         if (groups[groupName] === undefined) {
             groups[groupName] = [];
         }
-
+        // Lägg sedan boken i rätt grupp.
         groups[groupName].push(book);
     }
 
-    // Gör om grupperna till en array
+    // Just nu är "groups" ett objekt:
+    // {
+    //     "Ironside Academy": [Plier, Tourner],
+    //     "For the Fans": [For the Fans]
+    // }
+    //
+    // Object.values() hämtar själva innehållet från objektet.
+    // Resultatet blir en array som innehåller flera arrayer:
+    // [
+    //     [Plier, Tourner],
+    //     [For the Fans]
+    // ]
+    // Det gör att vi senare kan sortera och flytta HELA grupper.
     let bookGroups = Object.values(groups);
 
-    // Sortera böckerna INUTI varje serie
+
+    // Gå igenom en grupp i taget.
+    // "group" kan exempelvis vara:
+    // [Tourner, Plier, Relever]
     for (let group of bookGroups) {
 
+        // group[0] är den första boken i gruppen.
+        // Om den har ett seriesname vet vi att gruppen representerar en serie.
         if (group[0].seriesname) {
             group.sort(function (a, b) {
                 return a.seriesnumber - b.seriesnumber;
             });
         }
     }
-
-    // Sortera grupperna efter senaste läsdatum
+    // Nu är böckerna inom varje serie i rätt ordning.
+    // Men vi måste också bestämma vilken SERIE/GRUPP
+    // som ska visas först på bokhyllan. Vi vill att gruppen som innehåller den senast lästa boken ska komma först.
     bookGroups.sort(function (a, b) {
 
+        // Här ska vi spara det senaste datumet vi hittar i grupp A respektive grupp B.
         let latestDateA = 0;
         let latestDateB = 0;
 
+        // Gå igenom alla böcker i grupp A.
         for (let book of a) {
+
+            // Gör om bokens finish-datum till ett tal. Ju senare datum, desto större tal.
             let date = new Date(book.finish).getTime();
+
+            // Om detta datum är senare än det senaste datum vi hittat hittills sparar vi det.
             if (date > latestDateA) {
                 latestDateA = date;
             }
         }
 
+        // Gör exakt samma sak med grupp B.
         for (let book of b) {
             let date = new Date(book.finish).getTime();
-
             if (date > latestDateB) {
                 latestDateB = date;
             }
         }
 
+        // Jämför gruppernas senaste läsdatum.
+        // latestDateB - latestDateA betyder att det SENASTE datumet hamnar först.
         return latestDateB - latestDateA;
     });
 
-    // Lägg tillbaka alla böcker i en vanlig array
     let sortedBooks = [];
 
+    // Gå igenom varje grupp.
     for (let group of bookGroups) {
-
         for (let book of group) {
             sortedBooks.push(book);
         }
     }
+
     return sortedBooks;
+}
+
+async function sortAuthorsAtoZ() {
+
+    // Hämta alla böcker från Supabase
+    let { data: books, error } = await supabaseClient
+        .from("books")
+        .select("*");
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    // Sortera böckerna efter författare A–Ö
+    books.sort(function (a, b) {
+        return a.author.localeCompare(b.author, "sv");
+    });
+
+    // Töm den nuvarande bokhyllan
+    bookshelfContent.innerHTML = "";
+
+    // Skapa bokhyllan igen med den nya sorteringen
+    createBookshelf(books);
+
+    // Stäng dropdown-menyn
+    dropDownSort.classList.remove("showSortMenu");
+}
+
+
+async function sortAuthorsZtoA() {
+
+    let { data: books, error } = await supabaseClient
+        .from("books")
+        .select("*");
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    // Sortera böckerna efter författare Ö–A
+    books.sort(function (a, b) {
+        return b.author.localeCompare(a.author, "sv");
+    });
+
+    bookshelfContent.innerHTML = "";
+
+    createBookshelf(books);
+
+    dropDownSort.classList.remove("showSortMenu");
+}
+
+
+async function sortTitleAtoZ() {
+
+    let { data: books, error } = await supabaseClient
+        .from("books")
+        .select("*");
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    // Sortera böckerna efter titel A–Ö
+    books.sort(function (a, b) {
+        return a.title.localeCompare(b.title, "sv");
+    });
+
+    bookshelfContent.innerHTML = "";
+
+    createBookshelf(books);
+
+    dropDownSort.classList.remove("showSortMenu");
+}
+
+async function sortTitleZtoA() {
+
+    let { data: books, error } = await supabaseClient
+        .from("books")
+        .select("*");
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    // Sortera böckerna efter titel Ö–A
+    books.sort(function (a, b) {
+        return b.title.localeCompare(a.title, "sv");
+    });
+
+    bookshelfContent.innerHTML = "";
+
+    createBookshelf(books);
+
+    dropDownSort.classList.remove("showSortMenu");
 }
