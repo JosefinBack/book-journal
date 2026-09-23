@@ -47,12 +47,12 @@
 
 #boxOne {
     display: flex;
-    gap: 75px;
+    justify-content: space-between;
 }
 
 #boxTwo {
     display: flex;
-    gap: 55px;
+    justify-content: space-between;
 }
 
 #boxThree {
@@ -93,10 +93,12 @@
 
 #emotionsLabel {
     position: absolute;
+    height: 75px;
+    top: -49px;
 }
 
 #feelingsForBook {
-    width: 684px;
+    width: 646px;
     position: relative;
 }
 
@@ -134,7 +136,7 @@
 }
 
 #infoDIV {
-    width: 58%;
+    width: 53%;
     position: relative;
 }
 
@@ -194,7 +196,7 @@ input[type="text"] {
 }
 
 #summaryDIV {
-    width: 83%;
+    width: 93%;
 }
 
 #seriesInfo {
