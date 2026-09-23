@@ -7,6 +7,7 @@
     <title>Add a book</title>
     <link rel="stylesheet" href="../css/addBook.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/png" href="../assets/pic/favicon.png">
 </head>
 
 <body>
@@ -41,6 +42,11 @@
                             <button class="buttons" id="uploadButton" type="button">
                                 <p>Upload bookcover</p>
                             </button>
+
+                            <div>
+                                <input type="checkbox" id="specialInfo">
+                                <label for="specialInfo">Info-box on the cover</label>
+                            </div>
                         </div>
                     </div>
 
@@ -226,71 +232,57 @@
                 <div id="boxThree">
                     <!-- feelings-->
                     <div class="inputDIVcontent" id="feelingsForBook">
-                        <div class="ratingDiv">
-                            <p>Do I recommend this book?</p>
-
-                            <div id="radioButtonRek">
-                                <div>
-                                    <label for="rekYes">Yes</label>
-                                    <input type="radio" id="rekYes" name="rek">
-                                </div>
-
-                                <div>
-                                    <label for="rekMeybe">Maybe</label>
-                                    <input type="radio" id="rekMaybe" name="rek">
-                                </div>
-
-                                <div>
-                                    <label for="rekNo">No</label>
-                                    <input type="radio" id="rekNo" name="rek">
-                                </div>
-                            </div>
-                        </div>
-
+                        <img id="emotionsLabel" src="../assets/pic/emotions.png" alt="Emotions label">
                         <div id="emotionsDiv">
                             <p>This book made me feel:</p>
                             <div id="allEmotions">
 
-                                <div>
-                                    <label for="happy">Happy</label>
+                                <div class="formatDIV">
+                                    <img class="dragonEmotions" src="../assets/pic/dragonHappy.png" alt="happy dragon">
                                     <input type="checkbox" name="emotion" id="happy">
                                 </div>
 
-                                <div>
-                                    <label for="sad">Sad</label>
+                                <div class="formatDIV">
+                                    <img class="dragonEmotions" src="../assets/pic/dragonSad.png" alt="sad dragon">
                                     <input type="checkbox" name="emotion" id="sad">
                                 </div>
 
-                                <div>
-                                    <label for="angry">Angry</label>
+                                <div class="formatDIV">
+                                    <img class="dragonEmotions" src="../assets/pic/dragonAngry.png" alt="angry dragon">
                                     <input type="checkbox" name="emotion" id="angry">
                                 </div>
 
-                                <div>
-                                    <label for="heartbroken">Heartbroken</label>
+                                <div class="formatDIV">
+                                    <img class="dragonEmotions" src="../assets/pic/dragonHeartbroken.png"
+                                        alt="heartbroken dragon">
                                     <input type="checkbox" name="emotion" id="heartbroken">
                                 </div>
 
-                                <div>
-                                    <label for="inspired">Inspired</label>
+                                <div class="formatDIV">
+                                    <img class="dragonEmotions" src="../assets/pic/dragonInspired.png"
+                                        alt="inspired dragon">
                                     <input type="checkbox" name="emotion" id="inspired">
                                 </div>
 
-                                <div>
-                                    <label for="excited">Excited</label>
+                                <div class="formatDIV">
+                                    <img class="dragonEmotions" src="../assets/pic/dragonExcited.png"
+                                        alt="excited dragon">
                                     <input type="checkbox" name="emotion" id="excited">
                                 </div>
 
-                                <div>
-                                    <label for="wantMore">Want More</label>
+                                <div class="formatDIV">
+                                    <img class="dragonEmotions" src="../assets/pic/dragonMore.png"
+                                        alt="want more dragon">
                                     <input type="checkbox" name="emotion" id="wantMore">
                                 </div>
 
-                                <div>
-                                    <label for="flitry">Flitry</label>
+                                <div class="formatDIV">
+                                    <img class="dragonEmotions" src="../assets/pic/dragonFlirty.png"
+                                        alt="flirty dragon">
                                     <input type="checkbox" name="emotion" id="flitry">
                                 </div>
                             </div>
+
                             <div id="otherFeelingsDiv">
                                 <label for="otherFeelings">Other: </label>
                                 <input type="text" name="emotion" id="otherFeelings">
@@ -299,28 +291,25 @@
                     </div>
 
 
-                    <div class="inputDIVcontent" id="summary">
-                        <p>Summery of the book:</p><textarea id="summary" rows="5" cols="40"
+                    <div class="inputDIVcontent" id="summaryDIV">
+                        <p>Summery of the book:</p><textarea id="summary" rows="10" cols="40"
                             placeholder="Skriv en kort sammanfattning..."></textarea>
                     </div>
                 </div>
 
-                <!-- <div id="boxFour">
-                    
-                    <div class="inputDIVcontent" id="summary">
-                        <p>Summery of the book:</p><textarea id="summary" rows="5" cols="40"
-                            placeholder="Skriv en kort sammanfattning..."></textarea>
-                    </div>
-                </div> -->
-
+                <div id="buttons">
+                    <button>Add the book th the shelf</button>
+                    <button>Cancel</button>
+                </div>
             </div>
         </div>
 
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script src="../javascript/menu.js"></script>
     <script src="../javascript/addBook.js"></script>
-    <script src="../javascript/books.js"></script>
+
 </body>
 
 </html>

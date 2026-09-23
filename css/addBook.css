@@ -45,7 +45,6 @@
     top: -40px;
 }
 
-
 #boxOne {
     display: flex;
     gap: 75px;
@@ -58,7 +57,12 @@
 
 #boxThree {
     display: flex;
-    gap: 55px;
+    flex-direction: column;
+}
+
+#buttons {
+    margin-bottom: 50px;
+    padding: 30px 10px;
 }
 
 #content {
@@ -82,8 +86,18 @@
     flex-direction: column;
 }
 
+.dragonEmotions {
+    width: 150px;
+    object-fit: contain;
+}
+
+#emotionsLabel {
+    position: absolute;
+}
+
 #feelingsForBook {
-    width: 200px;
+    width: 684px;
+    position: relative;
 }
 
 #formats {
@@ -176,7 +190,11 @@ input[type="text"] {
 
 #radioButtonRek {
     display: flex;
-    justify-content: space-evenly;
+    gap: 20px;
+}
+
+#summaryDIV {
+    width: 83%;
 }
 
 #seriesInfo {
@@ -254,6 +272,10 @@ input[type="text"] {
 .stars .filled {
     color: gold;
     /* fyllda stjärnor */
+}
+
+#otherFeelingsDiv {
+    width: 250px;
 }
 
 .rating {
