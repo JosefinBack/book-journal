@@ -66,13 +66,17 @@ function makeBookCard(book) {
             book.seriesname + " · " + book.seriesnumber;
     }
 
+    //Boktitel + Serienamn i samma div (pga design i label)
+    let titleAndSerieDIV = document.createElement("div");
+    titleAndSerieDIV.append(bookTitle, bookSerie);
+
     // Betyg
     let bookRating = document.createElement("p");
     bookRating.classList.add("bookRating");
 
-    let star = document.createElement("span");
+    let star = document.createElement("img");
+    star.src = "../assets/pic/icons/goldstar.png";
     star.classList.add("ratingStar");
-    star.textContent = "★";
 
     let ratingText = document.createElement("span");
     ratingText.textContent = book.ratings.book + "/10";
@@ -80,17 +84,10 @@ function makeBookCard(book) {
     bookRating.append(star, ratingText);
 
     // Lägg ihop etiketten
-    bookLabel.append(
-        bookTitle,
-        bookSerie,
-        bookRating
-    );
+    bookLabel.append(titleAndSerieDIV, bookRating);
 
     // Lägg ihop hela boken
-    bookCard.append(
-        bookLabel,
-        bookImgDiv
-    );
+    bookCard.append(bookLabel, bookImgDiv);
 
     return bookCard;
 }

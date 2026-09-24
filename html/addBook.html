@@ -45,7 +45,12 @@
 
                             <div>
                                 <input type="checkbox" id="specialInfo">
-                                <label for="specialInfo">Info-box on the cover</label>
+                                <label for="specialInfo">Info-box</label>
+                            </div>
+
+                            <div id="specialInfoInput">
+                                <label for="inputSpecInfo">Text: </label>
+                                <input type="text" id="inputSpecInfo">
                             </div>
                         </div>
                     </div>
@@ -90,23 +95,23 @@
                                 <div class="formatDIV">
                                     <img class="formatIconSize" src="../assets/pic/icons/book.png" alt="book icon">
                                     <p>Fysical book</p>
-                                    <input type="checkbox" id="fysicalBook">
+                                    <input type="checkbox" id="fysicalBook" name="bookFormat" value="" fysicalBook>
                                 </div>
                                 <div class="formatDIV">
                                     <img class="formatIconSize" src="../assets/pic/icons/e-book.png" alt="e-book icon">
                                     <p>E-book</p>
-                                    <input type="checkbox" id="ebook">
+                                    <input type="checkbox" id="ebook" name="bookFormat" value="eBook">
                                 </div>
                                 <div class="formatDIV">
                                     <img class="formatIconSize" src="../assets/pic/icons/audiobook.png"
                                         alt="audiobook icon">
                                     <p>Audiobook</p>
-                                    <input type="checkbox" id="audiobook">
+                                    <input type="checkbox" id="audiobook" name="bookFormat" value="audiobook">
                                 </div>
                                 <div class="formatDIV">
                                     <img class="formatIconSize" src="../assets/pic/icons/mix.png" alt="mix icon">
                                     <p>A mix</p>
-                                    <input type="checkbox" id="mix">
+                                    <input type="checkbox" id="mix" name="bookFormat" value="mix">
                                 </div>
                             </div>
                         </div>
@@ -290,16 +295,15 @@
                         </div>
                     </div>
 
-
                     <div class="inputDIVcontent" id="summaryDIV">
-                        <p>Summery of the book:</p><textarea id="summary" rows="10" cols="40"
-                            placeholder="Skriv en kort sammanfattning..."></textarea>
+                        <textarea id="summary" rows="10" cols="40"></textarea>
+
                     </div>
                 </div>
 
                 <div id="buttons">
-                    <button>Add the book th the shelf</button>
-                    <button>Cancel</button>
+                    <button id="addBookButton">Add the book th the shelf</button>
+                    <button id="cancelButton">Cancel</button>
                 </div>
             </div>
         </div>
