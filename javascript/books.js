@@ -261,7 +261,7 @@ function showLatestBook(latestBook) {
     // Extra information
     let extraInfo = document.createElement("div");
     extraInfo.classList.add("latestExtraInfo");
-    let formatDiv = createLatestInfo("FORMAT", latestBook.type);
+    let formatDiv = createLatestInfo("FORMAT", latestBook.book_format);
     let genreDiv = createLatestInfo("GENRE", latestBook.genre);
     let startDiv = createLatestInfo("STARTED", latestBook.start);
     let finishDiv = createLatestInfo("FINISHED", latestBook.finish);

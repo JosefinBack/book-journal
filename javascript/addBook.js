@@ -115,6 +115,41 @@ async function addNewBook() {
     console.log(serie);
 }
 
+
+// function createBook() {
+//     let info = getNewBookInfo();
+//     let format = getFormat();
+//     let ratings = getRatings();
+//     let serie = getSeriesInfo();
+
+//     let book = {
+//         title: info.title,
+//         author: info.author,
+//         genre: info.genre,
+//         pages: Number(info.pages),
+//         start: info.startDate || null,
+//         finish: info.endDate || null,
+//         summary: info.summary,
+//         imgsrc: info.imgsrc,
+
+//         ratings: ratings,
+
+//         book_format: format,
+
+//         seriesname: serie.NameOfSeries || null,
+//         seriesnumber: serie.ThisBookNumber
+//             ? Number(serie.ThisBookNumber)
+//             : null,
+//         serieslength: serie.NumberOfBooks
+//             ? Number(serie.NumberOfBooks)
+//             : null
+//     };
+
+//     return book;
+// }
+
+
+
 function getNewBookInfo() {
     let title = document.getElementById("bookTitle").value;
     let author = document.getElementById("author").value;
@@ -140,7 +175,7 @@ function getNewBookInfo() {
 
 function getFormat() {
     let bookFormat = [];
-    let bookFormatCheckboxes = document.querySelectorAll('input[name ="bookFormat"]');
+    let bookFormatCheckboxes = document.querySelectorAll('input[name="bookFormat"]');
 
     for (let i = 0; i < bookFormatCheckboxes.length; i++) {
         if (bookFormatCheckboxes[i].checked) {
