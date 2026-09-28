@@ -107,12 +107,16 @@ async function addNewBook() {
     let format = getFormat();
     let rating = getRatings();
     let serie = getSeriesInfo();
+    let emotions = getEmotions();
+    let shelfNote = getShelfNote();
 
 
-    console.log(info);
-    console.log(format);
-    console.log(rating);
-    console.log(serie);
+    // console.log(info);
+    // console.log(format);
+    // console.log(rating);
+    // console.log(serie);
+    // console.log(emotions);
+    console.log(shelfNote);
 }
 
 
@@ -208,9 +212,7 @@ function getRatings() {
 }
 
 function getSeriesInfo() {
-
     let serieInfo = {};
-
     let serieName = document.getElementById("seriesname").value;
     let serieNumber = document.getElementById("numberSeries").value;
     let serieNumberThisBook = document.getElementById("seriesnumber").value;
@@ -226,14 +228,34 @@ function getSeriesInfo() {
             }
         }
     }
-
     return serieInfo;
 }
 
+function getEmotions() {
+    let emotionsArray = [];
+    let emotionsCheckboxes = document.querySelectorAll('input[name="emotion"]');
 
-// getSeriesInfo() – serienamn, serienummer och serieslength.
-// getEmotions() – skapar arrayen med valda känslor.
-// getShelfNote() – hämtar texten om checkboxen är markerad.
+    for (let i = 0; i < emotionsCheckboxes.length; i++) {
+        if (emotionsCheckboxes[i].checked) {
+            emotionsArray.push(emotionsCheckboxes[i].id);
+        }
+    }
+    return emotionsArray;
+}
+
+function getShelfNote() {
+    let shelfNote = [];
+    let checkboxShelfNote = document.getElementById("specialInfo");
+    let inputSpecInfo = document.getElementById("inputSpecInfo");
+
+    if (checkboxShelfNote.checked) {
+        shelfNote.push(inputSpecInfo.value);
+    }
+    return shelfNote;
+}
+
+
+
 // createBook() – samlar ihop informationen till ett bokobjekt.
 // saveBook() – enda funktionen som pratar med Supabase.
 
