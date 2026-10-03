@@ -6,7 +6,7 @@ let imgCoverUrl = "";
 let specialInfoCheckbox = document.getElementById("specialInfo");
 let specialInfoInput = document.getElementById("specialInfoInput");
 let addBookButton = document.getElementById("addBookButton");
-
+let cancelButton = document.getElementById("cancelButton");
 
 
 
@@ -17,10 +17,24 @@ uploadButton.addEventListener("click", function () {
 });
 
 //lägga till en bok i bokhyllan
-addBookButton.addEventListener("click", function () {
-    addNewBook();
-    //lägg till att alla fomrs ska whipas
+addBookButton.addEventListener("click", async function () {
+    let book = createBook();
+    let bookWasSaved = await saveBook(book);
+
+    if (bookWasSaved) {
+        clearForm();
+    }
 });
+
+cancelButton.addEventListener("click", function () {
+    clearForm();
+})
+
+
+
+
+
+// ***************** FUNKTIONER ****************'
 
 //Komprimerar bilder och sparar dem på Cloudinaty
 async function uploadToCloudinary(file) {
@@ -87,6 +101,8 @@ makeStarsClickable();
 
 
 
+//Get all info från form and create a book object
+
 let specialInfoInputText = "testText";
 let inputSpecInfo = document.getElementById("inputSpecInfo");
 
@@ -102,66 +118,13 @@ specialInfoCheckbox.addEventListener("click", function () {
 });
 
 
-async function addNewBook() {
-    let info = getNewBookInfo();
-    let format = getFormat();
-    let rating = getRatings();
-    let serie = getSeriesInfo();
-    let emotions = getEmotions();
-    let shelfNote = getShelfNote();
-
-
-    // console.log(info);
-    // console.log(format);
-    // console.log(rating);
-    // console.log(serie);
-    // console.log(emotions);
-    console.log(shelfNote);
-}
-
-
-// function createBook() {
-//     let info = getNewBookInfo();
-//     let format = getFormat();
-//     let ratings = getRatings();
-//     let serie = getSeriesInfo();
-
-//     let book = {
-//         title: info.title,
-//         author: info.author,
-//         genre: info.genre,
-//         pages: Number(info.pages),
-//         start: info.startDate || null,
-//         finish: info.endDate || null,
-//         summary: info.summary,
-//         imgsrc: info.imgsrc,
-
-//         ratings: ratings,
-
-//         book_format: format,
-
-//         seriesname: serie.NameOfSeries || null,
-//         seriesnumber: serie.ThisBookNumber
-//             ? Number(serie.ThisBookNumber)
-//             : null,
-//         serieslength: serie.NumberOfBooks
-//             ? Number(serie.NumberOfBooks)
-//             : null
-//     };
-
-//     return book;
-// }
-
-
-
-function getNewBookInfo() {
+function getBookInfo() {
     let title = document.getElementById("bookTitle").value;
     let author = document.getElementById("author").value;
     let genre = document.getElementById("genre").value;
     let pages = document.getElementById("pagesInput").value;
     let startDate = document.getElementById("startdate").value;
     let endDate = document.getElementById("finishdate").value;
-    let summary = document.getElementById("summary").value;
 
     let newBookInfoObj = {
         title: title,
@@ -170,7 +133,6 @@ function getNewBookInfo() {
         pages: pages,
         startDate: startDate,
         endDate: endDate,
-        summary: summary,
         imgsrc: imgCoverUrl
     };
     return newBookInfoObj;
@@ -254,8 +216,118 @@ function getShelfNote() {
     return shelfNote;
 }
 
+function getBookDescription() {
+    let bookDescription = document.getElementById("bookDescriptionArea").value;
+    return bookDescription;
+}
 
 
-// createBook() – samlar ihop informationen till ett bokobjekt.
-// saveBook() – enda funktionen som pratar med Supabase.
+function createBook() {
+    let bookInfo = getBookInfo();
+    let format = getFormat();
+    let ratings = getRatings();
+    let serie = getSeriesInfo();
+    let bookDescription = getBookDescription();
+
+    let book = {
+        title: bookInfo.title,
+        author: bookInfo.author,
+        genre: bookInfo.genre,
+        pages: Number(bookInfo.pages),
+        start: bookInfo.startDate || null,
+        finish: bookInfo.endDate || null,
+        imgsrc: bookInfo.imgsrc,
+
+        ratings: ratings,
+        book_format: format,
+
+        seriesname: serie.NameOfSeries || null,
+        seriesnumber: serie.ThisBookNumber ? Number(serie.ThisBookNumber) : null,
+        serieslength: serie.NumberOfBooks ? Number(serie.NumberOfBooks) : null,
+
+        bookDescription: bookDescription
+    };
+
+    return book;
+}
+
+//save book to supabase
+async function saveBook(book) {
+
+    if (!book.title.trim()) {
+        alert("You need to add a title.");
+        return false;
+    }
+
+    if (!book.imgsrc) {
+        alert("You need to add a book cover.");
+        return false;
+    }
+
+    if (!book.ratings.finalRate) {
+        alert("You need to add a final rating.");
+        return false;
+    }
+
+    let { data, error } = await supabaseClient
+        .from("books")
+        .insert([book])
+        .select();
+
+    if (error) {
+        console.error("Kunde inte spara boken:", error);
+        return false;
+    }
+
+    console.log("Boken sparades:", data);
+    return true;
+}
+
+
+
+function clearForm() {
+    // Nollställ vanliga textfält
+    document.getElementById("bookTitle").value = "";
+    document.getElementById("author").value = "";
+    document.getElementById("genre").value = "";
+    document.getElementById("pagesInput").value = "";
+    document.getElementById("startdate").value = "";
+    document.getElementById("finishdate").value = "";
+    document.getElementById("bookDescriptionArea").value = "";
+
+    // Nollställ serie-information
+    document.getElementById("seriesname").value = "";
+    document.getElementById("numberSeries").value = "";
+    document.getElementById("seriesnumber").value = "";
+
+    // Nollställ alla checkboxar
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+    for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = false;
+    }
+
+    // Nollställ alla radio-knappar
+    let radioButtons = document.querySelectorAll('input[type="radio"]');
+
+    for (let i = 0; i < radioButtons.length; i++) {
+        radioButtons[i].checked = false;
+    }
+
+    // Nollställ alla ratings
+    let stars = document.querySelectorAll(".stars span");
+
+    for (let i = 0; i < stars.length; i++) {
+        stars[i].classList.remove("filled");
+    }
+
+    // Nollställ special info
+    document.getElementById("inputSpecInfo").value = "";
+    specialInfoInput.style.visibility = "hidden";
+
+    // Ta bort bokomslaget
+    bookCover.innerHTML = "";
+    coverInput.value = "";
+    imgCoverUrl = "";
+}
 

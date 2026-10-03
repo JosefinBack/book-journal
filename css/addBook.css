@@ -60,6 +60,10 @@
     flex-direction: column;
 }
 
+#bookDescription {
+    width: 646px;
+}
+
 #buttons {
     margin-bottom: 50px;
     padding: 30px 10px;
@@ -197,10 +201,6 @@ input[type="text"] {
 #radioButtonRek {
     display: flex;
     gap: 20px;
-}
-
-#summaryDIV {
-    width: 646px;
 }
 
 #seriesInfo {
