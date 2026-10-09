@@ -1,3 +1,7 @@
+const supabaseClient = window.supabase.createClient(
+    "https://qciftuisfloydqxgrdrt.supabase.co",
+    "sb_publishable_m1PZazpxmQepEPbktVMzZA_YusPeIWL"
+);
 
 let uploadButton = document.getElementById("uploadButton");
 let coverInput = document.getElementById("cover");
@@ -8,6 +12,21 @@ let specialInfoInput = document.getElementById("specialInfoInput");
 let addBookButton = document.getElementById("addBookButton");
 let cancelButton = document.getElementById("cancelButton");
 
+let deleteBookButton = document.getElementById("deleteBookButton");
+let params = new URLSearchParams(window.location.search);
+let editBookId = params.get("edit");
+
+let editMode = false;
+if (editBookId) {
+    editMode = true;
+
+    addBookButton.textContent = "Save changes";
+    deleteBookButton.style.display = "inline-block";
+
+    loadBookForEditing(editBookId);
+} else {
+    deleteBookButton.style.display = "none";
+}
 
 
 
@@ -19,16 +38,48 @@ uploadButton.addEventListener("click", function () {
 //lägga till en bok i bokhyllan
 addBookButton.addEventListener("click", async function () {
     let book = createBook();
-    let bookWasSaved = await saveBook(book);
+    let bookWasSaved = false;
+
+    if (editMode) {
+        bookWasSaved = await updateBook(book);
+    } else {
+        bookWasSaved = await saveBook(book);
+    }
 
     if (bookWasSaved) {
-        clearForm();
+        window.location.href = "index.html";
     }
 });
 
 cancelButton.addEventListener("click", function () {
     clearForm();
+    window.location.href = "index.html";
 })
+
+deleteBookButton.addEventListener("click", async function () {
+    if (!editMode) {
+        return;
+    }
+
+    let answer = confirm(
+        "Are you sure you want to delete this book?"
+    );
+
+    if (!answer) {
+        return;
+    }
+
+    let { error } = await supabaseClient
+        .from("books")
+        .delete()
+        .eq("id", editBookId);
+
+    if (error) {
+        console.error("Could not delete book:", error);
+        return;
+    }
+    window.location.href = "index.html";
+});
 
 
 
@@ -98,15 +149,6 @@ function makeStarsClickable() {
 
 makeStarsClickable();
 
-
-
-
-//Get all info från form and create a book object
-
-let specialInfoInputText = "testText";
-let inputSpecInfo = document.getElementById("inputSpecInfo");
-
-inputSpecInfo.value = specialInfoInputText;
 
 //Ta fram inout för specialInfo
 specialInfoCheckbox.addEventListener("click", function () {
@@ -178,15 +220,22 @@ function getSeriesInfo() {
     let serieName = document.getElementById("seriesname").value;
     let serieNumber = document.getElementById("numberSeries").value;
     let serieNumberThisBook = document.getElementById("seriesnumber").value;
-
     let radioButtons = document.querySelectorAll('input[name="series"]');
 
     for (let i = 0; i < radioButtons.length; i++) {
         if (radioButtons[i].checked) {
-            serieInfo = {
-                NameOfSeries: serieName,
-                NumberOfBooks: serieNumber,
-                ThisBookNumber: serieNumberThisBook
+            if (radioButtons[i].value === "yes") {
+                serieInfo = {
+                    NameOfSeries: serieName,
+                    NumberOfBooks: serieNumber,
+                    ThisBookNumber: serieNumberThisBook
+                };
+            } else {
+                serieInfo = {
+                    NameOfSeries: null,
+                    NumberOfBooks: null,
+                    ThisBookNumber: null
+                };
             }
         }
     }
@@ -228,6 +277,9 @@ function createBook() {
     let ratings = getRatings();
     let serie = getSeriesInfo();
     let bookDescription = getBookDescription();
+    let shelfNote = getShelfNote();
+    let emotions = getEmotions();
+
 
     let book = {
         title: bookInfo.title,
@@ -237,6 +289,7 @@ function createBook() {
         start: bookInfo.startDate || null,
         finish: bookInfo.endDate || null,
         imgsrc: bookInfo.imgsrc,
+        shelf_note: shelfNote,
 
         ratings: ratings,
         book_format: format,
@@ -245,7 +298,8 @@ function createBook() {
         seriesnumber: serie.ThisBookNumber ? Number(serie.ThisBookNumber) : null,
         serieslength: serie.NumberOfBooks ? Number(serie.NumberOfBooks) : null,
 
-        bookDescription: bookDescription
+        emotions: emotions,
+        summary: bookDescription
     };
 
     return book;
@@ -331,3 +385,142 @@ function clearForm() {
     imgCoverUrl = "";
 }
 
+
+async function loadBookForEditing(bookId) {
+    let { data: book, error } = await supabaseClient
+        .from("books")
+        .select("*")
+        .eq("id", bookId)
+        .single();
+
+    if (error) {
+        console.error("Could not load book:", error);
+        return;
+    }
+    fillEditForm(book);
+}
+
+
+function fillEditForm(book) {
+
+    // VANLIG INFORMATION
+    document.getElementById("bookTitle").value = book.title || "";
+    document.getElementById("author").value = book.author || "";
+    document.getElementById("genre").value = book.genre || "";
+    document.getElementById("pagesInput").value = book.pages || "";
+    document.getElementById("startdate").value = book.start || "";
+    document.getElementById("finishdate").value = book.finish || "";
+    document.getElementById("bookDescriptionArea").value = book.summary || "";
+
+
+    // BOKOMSLAG
+    imgCoverUrl = book.imgsrc || "";
+    bookCover.innerHTML = "";
+
+    if (imgCoverUrl) {
+        let img = document.createElement("img");
+        img.src = imgCoverUrl;
+        img.classList.add("bookCoverSize");
+        bookCover.appendChild(img);
+    }
+
+
+    // FORMAT
+    let formatCheckboxes = document.querySelectorAll('input[name="bookFormat"]');
+    for (let i = 0; i < formatCheckboxes.length; i++) {
+        if (
+            book.book_format &&
+            book.book_format.includes(formatCheckboxes[i].value)
+        ) {
+            formatCheckboxes[i].checked = true;
+        }
+    }
+
+
+    // RATINGS
+    if (book.ratings) {
+        let ratingGroups = document.querySelectorAll(".stars");
+
+        for (let i = 0; i < ratingGroups.length; i++) {
+            let category = ratingGroups[i].dataset.category;
+            let ratingValue = book.ratings[category];
+
+            let stars =
+                ratingGroups[i].querySelectorAll("span");
+            for (let j = 0; j < stars.length; j++) {
+                if (j < ratingValue) {
+                    stars[j].classList.add("filled");
+                } else {
+                    stars[j].classList.remove("filled");
+                }
+            }
+        }
+    }
+
+
+    // SERIE
+    if (book.seriesname) {
+        document.getElementById("seriesYES").checked = true;
+        document.getElementById("seriesname").value =
+            book.seriesname;
+        document.getElementById("numberSeries").value =
+            book.serieslength || "";
+        document.getElementById("seriesnumber").value =
+            book.seriesnumber || "";
+    } else {
+        document.getElementById("seriesNO").checked = true;
+    }
+
+
+    // EMOTIONS
+    if (book.emotions) {
+        let emotionCheckboxes =
+            document.querySelectorAll('input[name="emotion"][type="checkbox"]');
+
+        for (let i = 0; i < emotionCheckboxes.length; i++) {
+            if (book.emotions.includes(emotionCheckboxes[i].id)) {
+                emotionCheckboxes[i].checked = true;
+            }
+        }
+    }
+
+
+    // SHELF NOTE
+    if (book.shelf_note && book.shelf_note.length > 0) {
+        specialInfoCheckbox.checked = true;
+        specialInfoInput.style.visibility = "visible";
+
+        document.getElementById("inputSpecInfo").value =
+            book.shelf_note[0];
+    }
+}
+
+async function updateBook(book) {
+    if (!book.title.trim()) {
+        alert("You need to add a title.");
+        return false;
+    }
+
+    if (!book.imgsrc) {
+        alert("You need to add a book cover.");
+        return false;
+    }
+
+    if (!book.ratings.finalRate) {
+        alert("You need to add a final rating.");
+        return false;
+    }
+
+    let { data, error } = await supabaseClient
+        .from("books")
+        .update(book)
+        .eq("id", editBookId)
+        .select();
+
+    if (error) {
+        console.error("Could not update book:", error);
+        return false;
+    }
+    console.log("Book updated:", data);
+    return true;
+}

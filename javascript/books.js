@@ -13,12 +13,54 @@ let dropDownSort = document.getElementById("dropDownSort");
 
 let buttonFilter = document.getElementById("buttonFilter");
 
+let allBooks = [];
+let currentBookIndex = 0;
+
+let bookPopupOverlay = document.getElementById("bookPopupOverlay");
+let bookPopupContent = document.getElementById("bookPopupContent");
+let closeBookPopup = document.getElementById("closeBookPopup");
+let previousBook = document.getElementById("previousBook");
+let nextBook = document.getElementById("nextBook");
+
+
 
 //AddEventListener
 
 buttonSort.addEventListener("click", function () {
     dropDownSort.classList.toggle("showSortMenu");
 });
+
+
+nextBook.addEventListener("click", function () {
+    currentBookIndex++;
+    if (currentBookIndex >= allBooks.length) {
+        currentBookIndex = 0;
+    }
+    showBookInPopup();
+});
+
+
+previousBook.addEventListener("click", function () {
+    currentBookIndex--;
+    if (currentBookIndex < 0) {
+        currentBookIndex = allBooks.length - 1;
+    }
+    showBookInPopup();
+});
+
+
+closeBookPopup.addEventListener("click", function () {
+    bookPopupOverlay.classList.remove("showBookPopup");
+});
+
+
+bookPopupOverlay.addEventListener("click", function (event) {
+    if (event.target === bookPopupOverlay) {
+        bookPopupOverlay.classList.remove("showBookPopup");
+    }
+});
+
+
 
 
 //Functions
@@ -79,7 +121,7 @@ function makeBookCard(book) {
     star.classList.add("ratingStar");
 
     let ratingText = document.createElement("span");
-    ratingText.textContent = book.ratings.book + "/10";
+    ratingText.textContent = book.ratings.finalRate + "/10";
 
     bookRating.append(star, ratingText);
 
@@ -89,23 +131,57 @@ function makeBookCard(book) {
     // Lägg ihop hela boken
     bookCard.append(bookLabel, bookImgDiv);
 
+    bookCard.addEventListener("click", function () {
+        openBookPopup(book.id);
+    });
+
     return bookCard;
 }
 
+function openBookPopup(bookId) {
+    for (let i = 0; i < allBooks.length; i++) {
+
+        if (allBooks[i].id === bookId) {
+            currentBookIndex = i;
+            break;
+        }
+    }
+    showBookInPopup();
+    bookPopupOverlay.classList.add("showBookPopup");
+}
+
+// async function getAllBooks() {
+//     let { data: AllBooks, error } = await supabaseClient
+//         .from("books")
+//         .select("*")
+
+//     if (error) {
+//         console.error(error);
+//         return null;
+//     }
+
+//     let sortedBooks = sortBooks(AllBooks);
+//     createBookshelf(sortedBooks);
+// }
+
 
 async function getAllBooks() {
-    let { data: AllBooks, error } = await supabaseClient
+    let { data: books, error } = await supabaseClient
         .from("books")
-        .select("*")
+        .select("*");
 
     if (error) {
         console.error(error);
         return null;
     }
 
-    let sortedBooks = sortBooks(AllBooks);
+    let sortedBooks = sortBooks(books);
+
+    allBooks = sortedBooks;
+
     createBookshelf(sortedBooks);
 }
+
 getAllBooks();
 
 
@@ -254,7 +330,7 @@ function showLatestBook(latestBook) {
     star.textContent = "★";
 
     let ratingNumber = document.createElement("span");
-    ratingNumber.textContent = latestBook.ratings.book + "/10";
+    ratingNumber.textContent = latestBook.ratings.finalRate + "/10";
 
     bookRating.append(star, ratingNumber);
 
@@ -311,6 +387,111 @@ function createLatestInfo(label, value) {
     return infoDiv;
 }
 
+function showBookInPopup() {
+
+    let book = allBooks[currentBookIndex];
+    bookPopupContent.innerHTML = "";
+
+    // BOKOMSLAG
+    let cover = document.createElement("img");
+    cover.src = book.imgsrc;
+    cover.alt = book.title;
+    cover.classList.add("popupBookCover");
+
+    // INFO-CONTAINER
+    let info = document.createElement("div");
+    info.classList.add("popupBookInfo");
+
+    // TITEL
+    let title = document.createElement("h2");
+    title.textContent = book.title;
+
+    // FÖRFATTARE
+    let author = document.createElement("p");
+    author.classList.add("popupAuthor");
+    author.textContent = book.author;
+
+    // SERIE
+    let series = document.createElement("p");
+
+    if (book.seriesname) {
+        series.textContent =
+            book.seriesname +
+            " · Book " +
+            book.seriesnumber +
+            " of " +
+            book.serieslength;
+    }
+
+
+    // BETYG
+    let rating = document.createElement("p");
+    rating.classList.add("popupRating");
+
+    if (book.ratings && book.ratings.finalRate !== undefined) {
+        rating.textContent = "★ " + book.ratings.finalRate + "/10";
+    }
+
+    // GENRE
+    let genre = document.createElement("p");
+    genre.textContent = "Genre: " + (book.genre || "—");
+
+    // FORMAT
+    let format = document.createElement("p");
+
+    if (book.book_format && book.book_format.length > 0) {
+        format.textContent = "Format: " + book.book_format.join(", ");
+    } else {
+        format.textContent = "Format: —";
+    }
+
+    // SIDOR
+    let pages = document.createElement("p");
+    pages.textContent = "Pages: " + (book.pages || "—");
+
+
+    // DATUM
+    let dates = document.createElement("p");
+    dates.textContent =
+        "Read: " +
+        (book.start || "—") +
+        " – " +
+        (book.finish || "—");
+
+
+    // SUMMARY
+    let summary = document.createElement("p");
+    summary.classList.add("popupSummary");
+    summary.textContent = book.summary || "";
+
+    // EDIT-KNAPP
+    let editButton = document.createElement("button");
+    editButton.textContent = "Edit";
+    editButton.classList.add("popupEditButton");
+
+    editButton.addEventListener("click", function () {
+        window.location.href =
+            "addBook.html?edit=" + book.id;
+    });
+
+    info.append(
+        title,
+        author,
+        series,
+        rating,
+        genre,
+        format,
+        pages,
+        dates,
+        summary,
+        editButton
+    );
+
+    bookPopupContent.append(
+        cover,
+        info
+    );
+}
 
 
 
