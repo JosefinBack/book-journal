@@ -259,10 +259,10 @@ function getShelfNote() {
     let checkboxShelfNote = document.getElementById("specialInfo");
     let inputSpecInfo = document.getElementById("inputSpecInfo");
 
-    if (checkboxShelfNote.checked) {
-        shelfNote.push(inputSpecInfo.value);
+    if (checkboxShelfNote.checked && inputSpecInfo.value.trim() !== "") {
+        return inputSpecInfo.value;
     }
-    return shelfNote;
+    return null;
 }
 
 function getBookDescription() {
@@ -403,7 +403,6 @@ async function loadBookForEditing(bookId) {
 
 function fillEditForm(book) {
 
-    // VANLIG INFORMATION
     document.getElementById("bookTitle").value = book.title || "";
     document.getElementById("author").value = book.author || "";
     document.getElementById("genre").value = book.genre || "";
@@ -411,7 +410,6 @@ function fillEditForm(book) {
     document.getElementById("startdate").value = book.start || "";
     document.getElementById("finishdate").value = book.finish || "";
     document.getElementById("bookDescriptionArea").value = book.summary || "";
-
 
     // BOKOMSLAG
     imgCoverUrl = book.imgsrc || "";
@@ -424,7 +422,6 @@ function fillEditForm(book) {
         bookCover.appendChild(img);
     }
 
-
     // FORMAT
     let formatCheckboxes = document.querySelectorAll('input[name="bookFormat"]');
     for (let i = 0; i < formatCheckboxes.length; i++) {
@@ -435,7 +432,6 @@ function fillEditForm(book) {
             formatCheckboxes[i].checked = true;
         }
     }
-
 
     // RATINGS
     if (book.ratings) {
@@ -457,7 +453,6 @@ function fillEditForm(book) {
         }
     }
 
-
     // SERIE
     if (book.seriesname) {
         document.getElementById("seriesYES").checked = true;
@@ -471,7 +466,6 @@ function fillEditForm(book) {
         document.getElementById("seriesNO").checked = true;
     }
 
-
     // EMOTIONS
     if (book.emotions) {
         let emotionCheckboxes =
@@ -484,14 +478,17 @@ function fillEditForm(book) {
         }
     }
 
-
     // SHELF NOTE
-    if (book.shelf_note && book.shelf_note.length > 0) {
+    if (book.shelf_note) {
         specialInfoCheckbox.checked = true;
         specialInfoInput.style.visibility = "visible";
 
-        document.getElementById("inputSpecInfo").value =
-            book.shelf_note[0];
+        document.getElementById("inputSpecInfo").value = book.shelf_note;
+    } else {
+        specialInfoCheckbox.checked = false;
+        specialInfoInput.style.visibility = "hidden";
+
+        document.getElementById("inputSpecInfo").value = "";
     }
 }
 

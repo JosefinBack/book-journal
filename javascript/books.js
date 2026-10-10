@@ -76,6 +76,9 @@ for (let button of buttonSideMenu) {
 }
 
 function makeBookCard(book) {
+
+    console.log(book.title, book.shelf_note);
+
     let bookCard = document.createElement("div");
     bookCard.classList.add("book");
 
@@ -89,6 +92,18 @@ function makeBookCard(book) {
     bookImg.alt = book.title;
 
     bookImgDiv.appendChild(bookImg);
+
+    // Info-box
+    if (book.shelf_note) {
+        let infoBox = document.createElement("div");
+        infoBox.classList.add("bookInfoBox");
+
+        let infoText = document.createElement("p");
+        infoText.textContent = book.shelf_note;
+
+        infoBox.appendChild(infoText);
+        bookImgDiv.appendChild(infoBox);
+    }
 
     // Etikett
     let bookLabel = document.createElement("div");
@@ -106,6 +121,8 @@ function makeBookCard(book) {
     if (book.seriesname) {
         bookSerie.textContent =
             book.seriesname + " · " + book.seriesnumber;
+    } else {
+        bookSerie.textContent = "*** Stand alone ***";
     }
 
     //Boktitel + Serienamn i samma div (pga design i label)
