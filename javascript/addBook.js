@@ -402,7 +402,6 @@ async function loadBookForEditing(bookId) {
 
 
 function fillEditForm(book) {
-
     document.getElementById("bookTitle").value = book.title || "";
     document.getElementById("author").value = book.author || "";
     document.getElementById("genre").value = book.genre || "";
@@ -468,8 +467,7 @@ function fillEditForm(book) {
 
     // EMOTIONS
     if (book.emotions) {
-        let emotionCheckboxes =
-            document.querySelectorAll('input[name="emotion"][type="checkbox"]');
+        let emotionCheckboxes = document.querySelectorAll('input[name="emotion"][type="checkbox"]');
 
         for (let i = 0; i < emotionCheckboxes.length; i++) {
             if (book.emotions.includes(emotionCheckboxes[i].id)) {

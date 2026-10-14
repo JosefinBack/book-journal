@@ -76,9 +76,6 @@ for (let button of buttonSideMenu) {
 }
 
 function makeBookCard(book) {
-
-    console.log(book.title, book.shelf_note);
-
     let bookCard = document.createElement("div");
     bookCard.classList.add("book");
 
@@ -167,21 +164,6 @@ function openBookPopup(bookId) {
     bookPopupOverlay.classList.add("showBookPopup");
 }
 
-// async function getAllBooks() {
-//     let { data: AllBooks, error } = await supabaseClient
-//         .from("books")
-//         .select("*")
-
-//     if (error) {
-//         console.error(error);
-//         return null;
-//     }
-
-//     let sortedBooks = sortBooks(AllBooks);
-//     createBookshelf(sortedBooks);
-// }
-
-
 async function getAllBooks() {
     let { data: books, error } = await supabaseClient
         .from("books")
@@ -193,9 +175,7 @@ async function getAllBooks() {
     }
 
     let sortedBooks = sortBooks(books);
-
     allBooks = sortedBooks;
-
     createBookshelf(sortedBooks);
 }
 
@@ -259,53 +239,6 @@ async function latestBook() {
 latestBook();
 
 
-// function showLatestBook(latestBook) {
-//     //Skapa en div med info om boken som ska synas i topDIV
-//     let divBook = document.createElement("div");
-//     let pTitle = document.createElement("h4");
-//     pTitle.textContent = latestBook.title;
-//     pTitle.style.fontSize = "18px";
-//     pTitle.style.margin = "0px";
-
-//     let pInfo = null;
-
-//     if (latestBook.seriesname) {
-//         pInfo = document.createElement("p");
-//         pInfo.style.margin = "0px";
-//         pInfo.textContent = `${latestBook.seriesname} (${latestBook.seriesnumber})`;
-//     }
-
-//     let pImg = document.createElement("img");
-//     pImg.src = latestBook.imgsrc;
-//     pImg.style.height = "150px";
-
-//     let pRating = document.createElement("p");
-//     pRating.style.marginTop = "15px";
-//     pRating.style.fontSize = "14px";
-//     pRating.style.fontWeight = "bold";
-//     let text = document.createElement("span");
-//     text.textContent = `${latestBook.ratings.book}/10 `;
-
-//     let star = document.createElement("span");
-//     star.textContent = "★";
-//     star.style.color = "gold";
-//     pRating.append(text, star);
-
-//     latestBookRead.innerHTML = "";
-//     divBook.innerHTML = "";
-
-//     let bookInfoDiv = document.createElement("div");
-//     bookInfoDiv.classList.add("bookInfoDiv");
-//     bookInfoDiv.append(pTitle);
-
-//     if (pInfo) {
-//         bookInfoDiv.append(pInfo);
-//     }
-
-//     bookInfoDiv.append(pRating)
-//     latestBookRead.append(pImg, bookInfoDiv);
-// }
-
 function showLatestBook(latestBook) {
     latestBookRead.innerHTML = "";
 
@@ -359,19 +292,10 @@ function showLatestBook(latestBook) {
     let startDiv = createLatestInfo("STARTED", latestBook.start);
     let finishDiv = createLatestInfo("FINISHED", latestBook.finish);
 
-    extraInfo.append(
-        formatDiv,
-        genreDiv,
-        startDiv,
-        finishDiv
-    );
+    extraInfo.append(formatDiv, genreDiv, startDiv, finishDiv);
 
-    bookInfoDiv.append(
-        bookTitle,
-        bookSerie,
-        bookRating,
-        extraInfo
-    );
+    bookInfoDiv.append(bookTitle, bookSerie, bookRating, extraInfo);
+
     latestBookRead.append(
         bookCoverDiv,
         bookInfoDiv
@@ -379,7 +303,6 @@ function showLatestBook(latestBook) {
 }
 
 function createLatestInfo(label, value) {
-
     let infoDiv = document.createElement("div");
     infoDiv.classList.add("latestInfoItem");
 
@@ -396,10 +319,7 @@ function createLatestInfo(label, value) {
         infoValue.textContent = "—";
     }
 
-    infoDiv.append(
-        infoLabel,
-        infoValue
-    );
+    infoDiv.append(infoLabel, infoValue);
 
     return infoDiv;
 }
@@ -440,7 +360,6 @@ function showBookInPopup() {
             book.serieslength;
     }
 
-
     // BETYG
     let rating = document.createElement("p");
     rating.classList.add("popupRating");
@@ -469,11 +388,7 @@ function showBookInPopup() {
 
     // DATUM
     let dates = document.createElement("p");
-    dates.textContent =
-        "Read: " +
-        (book.start || "—") +
-        " – " +
-        (book.finish || "—");
+    dates.textContent = "Read: " + (book.start || "—") + " – " + (book.finish || "—");
 
 
     // SUMMARY
@@ -487,27 +402,61 @@ function showBookInPopup() {
     editButton.classList.add("popupEditButton");
 
     editButton.addEventListener("click", function () {
-        window.location.href =
-            "addBook.html?edit=" + book.id;
+        window.location.href = "addBook.html?edit=" + book.id;
     });
 
-    info.append(
-        title,
-        author,
-        series,
-        rating,
-        genre,
-        format,
-        pages,
-        dates,
-        summary,
-        editButton
-    );
 
-    bookPopupContent.append(
-        cover,
-        info
-    );
+    let bigDiv = document.createElement("div");
+    bigDiv.classList.add("bigDivStyle");
+
+    let bookInfo = document.createElement("div");
+    bookInfo.style.width = "50%";
+    let bookFeelings = document.createElement("div");
+    bookFeelings.style.width = "50%";
+    bookFeelings.classList.add("bookFeelings");
+
+
+
+    //KÄNSLOR
+    let emotionImages = {
+        happy: "dragonHappy.png",
+        sad: "dragonSad.png",
+        angry: "dragonAngry.png",
+        heartbroken: "dragonHeartbroken.png",
+        LoveIt: "dragonLoveIt.png",
+        inspired: "dragonInspired.png",
+        excited: "dragonExcited.png",
+        notLikeIt: "dragonNotLikeIt.png",
+        wantMore: "dragonMore.png",
+        flitry: "dragonFlirty.png",
+        bored: "dragonBored.png",
+        meh: "dragonMeh.png",
+        laughing: "dragonLaughing.png",
+        disappointed: "dragonDisappointed.png"
+    };
+
+    let allFeelings = book.emotions;
+    let showEmotions = [];
+
+    for (let i = 0; i < allFeelings.length; i++) {
+        let emotion = allFeelings[i];
+        let imageName = emotionImages[emotion];
+
+        if (imageName) {
+            let feeling = document.createElement("img");
+            feeling.src = "../assets/pic/" + imageName;
+            feeling.alt = emotion;
+            feeling.classList.add("dragonEmotions");
+
+            showEmotions.push(feeling);
+        }
+    }
+    bookFeelings.append(...showEmotions);
+
+    bigDiv.append(bookInfo, bookFeelings);
+    bookInfo.append(author, series, rating, genre, format, pages, dates);
+    info.append(title, bigDiv, summary, editButton);
+    bookPopupContent.append(cover, info);
 }
 
 

@@ -184,6 +184,11 @@ body {
     border: 1px solid black;
 }
 
+.dragonEmotions {
+    width: 120px;
+    object-fit: contain;
+}
+
 #header {
     height: 200px;
     width: 1200px;
@@ -204,20 +209,7 @@ body {
     align-items: flex-end;
 }
 
-/* .bookInfoBox {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
 
-    width: 80%;
-    padding: 6px 10px;
-    background-color: #eee5d9;
-    text-align: center;
-    z-index: 2;
-    font-size: 12px;
-    color: var(--dark-green);
-} */
 .bookInfoBox {
     position: absolute;
     bottom: -42px;
@@ -297,30 +289,23 @@ body {
         0 22px 30px -12px rgba(50, 45, 35, 0.45);
 }
 
-/* .bookSerie {
-    min-height: 15px;
-} */
 
 .bookLabel {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-between;
     width: 180px;
-    height: 90px;
+    height: 95px;
     margin-top: 10px;
     margin-bottom: 5px;
     padding: 5px;
     padding-top: 10px;
     box-sizing: border-box;
 
-    background: linear-gradient(to bottom,
-            #f8f2e7,
-            #eee3d1);
-
+    background: linear-gradient(to bottom, #f8f2e7, #eee3d1);
     border: 1px solid #d2c6ae;
     border-radius: 10px;
-
     box-shadow:
         0 2px 6px -3px rgba(60, 50, 35, 0.6);
     /* 
@@ -398,16 +383,11 @@ body {
 
 #bookPopup {
     position: relative;
-
     width: min(900px, 90vw);
     max-height: 85vh;
-
     background: #eee5d9;
-
     padding: 50px 70px;
-
     overflow-y: auto;
-
     border-radius: 4px;
 }
 
@@ -417,6 +397,18 @@ body {
     gap: 50px;
 
     align-items: start;
+}
+
+.bigDivStyle {
+    display: flex;
+    gap: 15px;
+}
+
+.bookFeelings {
+    border-left: 1px solid black;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 .popupBookCover {
