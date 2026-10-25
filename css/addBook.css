@@ -67,6 +67,23 @@
 #buttons {
     margin-bottom: 50px;
     padding: 30px 10px;
+    display: flex;
+    gap: 20px;
+}
+
+.buttonInForm {
+    border: 1px solid var(--dark-green);
+    padding: 10px 20px;
+    border-radius: var(--border-radius-small);
+    background-color: var(--dark-green);
+    color: white;
+    font-size: var(--font-size-text);
+}
+
+.buttonInForm:hover {
+    background-color: var(--background-page);
+    color: var(--dark-green);
+    cursor: pointer;
 }
 
 #content {
@@ -175,9 +192,6 @@ input[type="text"] {
     box-sizing: border-box;
 }
 
-#numberSeries {
-    width: 69px;
-}
 
 #otherFeelingsDiv {
     display: flex;
@@ -203,8 +217,14 @@ input[type="text"] {
     gap: 20px;
 }
 
+.seriesInfoDivs p {
+    white-space: nowrap;
+}
+
 #seriesInfo {
     position: relative;
+    height: 100px;
+    ;
 }
 
 .seriesInfoDivs {
@@ -222,14 +242,6 @@ input[type="text"] {
 #shelfIMG {
     height: 20px;
     width: 230px;
-}
-
-#seriesname {
-    width: 227px;
-}
-
-#seriesnumber {
-    width: 143px;
 }
 
 #specialInfoInput {
@@ -260,32 +272,37 @@ input[type="text"] {
 } */
 
 
-#ratingBook {
-    font-size: 22px;
-}
-
 .ratingBook {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 10px;
+    gap: 10px;
 }
 
 .ratingBook p {
-    font-size: 18px;
+    font-size: 16px;
     margin: 2px;
 }
 
+.stars {
+    display: flex;
+    gap: 2px;
+}
+
 .stars span {
+    display: flex;
     cursor: pointer;
-    font-size: 18px;
     color: #ccc;
-    /* tomma stjärnor */
+}
+
+.stars svg {
+    width: 22px;
+    height: 22px;
 }
 
 .stars span.filled {
     color: gold;
-    /* fyllda stjärnor */
 }
 
 #otherFeelingsDiv {
@@ -304,7 +321,7 @@ input[type="text"] {
 }
 
 #ratingBox {
-    width: 200px;
+    width: auto;
     position: relative;
 }
 

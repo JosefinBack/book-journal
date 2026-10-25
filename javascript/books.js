@@ -399,7 +399,7 @@ function showBookInPopup() {
     // EDIT-KNAPP
     let editButton = document.createElement("button");
     editButton.textContent = "Edit";
-    editButton.classList.add("popupEditButton");
+    editButton.classList.add("buttonInForm");
 
     editButton.addEventListener("click", function () {
         window.location.href = "addBook.html?edit=" + book.id;
