@@ -14,7 +14,6 @@ let monthButton = document.getElementById("monthButton");
 
 
 genreButton.addEventListener("click", function () {
-    console.log("BUTTEN WORK")
     grafHeader.innerHTML = "";
     drawingSpace.innerHTML = "";
     diagramGenre();
@@ -31,7 +30,7 @@ monthButton.addEventListener("click", function () {
 function diagramGenre() {
     let h1 = document.createElement("h1");
     h1.innerHTML = `Antal böcker inom varje genre`;
-    drawingSpace.append(h1);
+    drawingSpace.append(h2);
 
     async function getBooksAndGenre() {
         let { data, error } = await supabaseClient
@@ -119,7 +118,7 @@ function diagramGenre() {
             .attr("width", xScale.bandwidth())
             .attr("x", d => xScale(d.genre))
             .attr("y", d => yScale(d.count))
-            .attr("fill", "lightpink")
+            .attr("fill", "#436448")
             ;
 
         svg.selectAll("text")
@@ -132,7 +131,7 @@ function diagramGenre() {
             .attr("text-anchor", "middle")
             .attr("fill", "black")
             .attr("font-weight", "bold")
-            .attr("font-size", "20px")
+            .attr("font-size", "16px")
 
         let xAxel = d3.axisBottom(xScale);
         let yAxel = d3.axisLeft(yScale);
