@@ -13,49 +13,132 @@ let genreButton = document.getElementById("genreButton");
 let monthButton = document.getElementById("monthButton");
 
 
-genreButton.addEventListener("click", function () {
+let currentYear = new Date().getFullYear();
+let selectedYear = currentYear;
+
+let firstYear = currentYear;
+let allBooks = [];
+let activeDiagram = "month";
+
+
+// Hämta alla böcker från Supabase
+async function getBooks() {
+    let { data, error } = await supabaseClient
+        .from("books")
+        .select("title, genre, finish");
+
+    if (error) {
+        console.error(error);
+        return [];
+    }
+    return data;
+}
+
+
+// Hitta det äldsta året med en avslutad bok
+function getFirstYear(bookArray) {
+    let years = [];
+    for (let book of bookArray) {
+        if (book.finish) {
+            let year = Number(book.finish.slice(0, 4));
+
+            if (!isNaN(year)) {
+                years.push(year);
+            }
+        }
+    }
+
+    if (years.length === 0) {
+        return currentYear;
+    }
+    return Math.min(...years);
+}
+
+
+// Skapa årsknappar automatiskt
+function createYearButtons() {
+    let divYearsButton = document.createElement("div");
+    divYearsButton.id = "statsYears";
+
+    for (let year = firstYear; year <= currentYear; year++) {
+        let yearButton = document.createElement("button");
+        yearButton.textContent = year;
+
+        if (year === selectedYear) {
+            yearButton.classList.add("active");
+        }
+
+        yearButton.addEventListener("click", function () {
+            selectedYear = year;
+            updateDiagram();
+        });
+        divYearsButton.append(yearButton);
+    }
+    grafHeader.append(divYearsButton);
+}
+
+
+// Uppdatera det valda diagrammet
+function updateDiagram() {
     grafHeader.innerHTML = "";
     drawingSpace.innerHTML = "";
-    diagramGenre();
+    if (activeDiagram === "genre") {
+        diagramGenre();
+    }
+    else {
+        diagramBooksPerMonth();
+    }
+    createYearButtons();
+}
+
+
+// Starta statistiken
+async function startStats() {
+    allBooks = await getBooks();
+    firstYear = getFirstYear(allBooks);
+    updateDiagram();
+}
+
+startStats();
+
+genreButton.addEventListener("click", function () {
+    activeDiagram = "genre";
+    updateDiagram();
 });
 
+
 monthButton.addEventListener("click", function () {
-    grafHeader.innerHTML = "";
-    drawingSpace.innerHTML = "";
-    diagramBooksPerMonth();
+    activeDiagram = "month";
+    updateDiagram();
 });
 
 
 //Diagram för genre
 function diagramGenre() {
-    let h1 = document.createElement("h1");
-    h1.innerHTML = `Antal böcker inom varje genre`;
-    drawingSpace.append(h1);
-
-    async function getBooksAndGenre() {
-        let { data, error } = await supabaseClient
-            .from("books")
-            .select("genre, title");
-
-        if (error) {
-            console.error(error);
-            return [];
-        }
-        return data;
-    }
+    let h2 = document.createElement("h2");
+    h2.innerHTML = `Antal böcker inom varje genre - ${selectedYear}`;
+    grafHeader.append(h2);
 
     function prepareData(bookArray) {
-        return bookArray.map(function (book) {
-            return book.genre.split(",")[0].trim();
-        });
-    };
+        let genres = [];
+        for (let book of bookArray) {
+            if (!book.finish || !book.genre) {
+                continue;
+            }
 
-    async function start() {
-        let bookArray = await getBooksAndGenre();
-        let genres = prepareData(bookArray);
-        drawChart(genres);
-    };
-    start();
+            let yearFinish = Number(book.finish.slice(0, 4));
+
+            if (yearFinish === selectedYear) {
+                let genre = book.genre.split(",")[0].trim();
+                genres.push(genre);
+            }
+        }
+        return genres;
+    }
+
+    let genres = prepareData(allBooks);
+    drawChart(genres);
+
 
     function drawChart(genres) {
         const hSvg = 400;
@@ -147,64 +230,42 @@ function diagramGenre() {
 };
 
 
-//diagram för böcker per månad
+function getCurrentYear() {
+    return new Date().getFullYear();
+}
+
+
+// Diagram för böcker per månad
 function diagramBooksPerMonth() {
     let h2 = document.createElement("h2");
-    h2.innerHTML = `Avslutade böcker per månad`;
+    h2.innerHTML = `Avslutade böcker per månad - ${selectedYear}`;
     grafHeader.append(h2);
-    prepareData(2026);
 
-    let divYearsButton = document.createElement("div");
-    let button2025 = document.createElement("button");
-    button2025.textContent = "2025";
-    divYearsButton.append(button2025);
+    function prepareData(bookArray) {
 
-    let button2026 = document.createElement("button");
-    button2026.textContent = "2026";
-    divYearsButton.append(button2026);
-
-    grafHeader.append(divYearsButton);
-
-    button2025.addEventListener("click", function () {
-        prepareData(2025);
-    });
-
-    button2026.addEventListener("click", function () {
-        prepareData(2026);
-    });
-
-    async function getBooks() {
-        let { data, error } = await supabaseClient
-            .from("books")
-            .select("title, finish");
-
-        if (error) {
-            console.error(error);
-            return [];
-        };
-        return data;
-    };
-
-    async function prepareData(year) {
-        let bookArray = await getBooks();
-        drawChart(bookArray, year);
-    };
-
-
-    function drawChart(bookArray, selectedYear) {
-
-        const allMonth = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const allMonth = [
+            "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+        ];
 
         let booksInEachMonth = {};
         let dataset = [];
 
-        // 1. RÄKNA (baserat på valt år)
+        // Räkna böcker för det valda året
         for (let book of bookArray) {
-            let yearFinish = new Date(book.finish).getFullYear();
+
+            if (!book.finish) {
+                continue;
+            }
+
+            let yearFinish = Number(book.finish.slice(0, 4));
 
             if (yearFinish === selectedYear) {
-                let monthFinish = new Date(book.finish).getMonth();
+                let monthFinish = Number(book.finish.slice(5, 7)) - 1;
                 let monthName = allMonth[monthFinish];
+
+                if (!monthName) {
+                    continue;
+                }
 
                 if (!booksInEachMonth[monthName]) {
                     booksInEachMonth[monthName] = 0;
@@ -214,21 +275,20 @@ function diagramBooksPerMonth() {
             }
         }
 
-        // 2. BYGG dataset
+        // Skapa dataset för alla tolv månader
         for (let month of allMonth) {
             let count = booksInEachMonth[month] || 0;
 
-            if (count > 0) {
-                dataset.push({
-                    month: month,
-                    count: count
-                });
-            }
+            dataset.push({
+                month: month,
+                count: count
+            });
         }
-        console.group(dataset)
-        makeChart(dataset);
+        return dataset;
     }
-};
+    let dataset = prepareData(allBooks);
+    makeChart(dataset);
+}
 
 function makeChart(dataset) {
     drawingSpace.innerHTML = "";
@@ -250,8 +310,10 @@ function makeChart(dataset) {
         .domain(months)
         .range([wPad, wSvg - wPad])
 
+    let maxBooks = d3.max(dataset, d => d.count) || 0;
+
     let yScale = d3.scaleLinear()
-        .domain([0, 10])
+        .domain([0, Math.max(5, maxBooks + 1)])
         .range([hSvg - hPad, hPad])
 
     let dFunction = d3.line()
