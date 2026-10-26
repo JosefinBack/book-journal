@@ -30,7 +30,7 @@ monthButton.addEventListener("click", function () {
 function diagramGenre() {
     let h1 = document.createElement("h1");
     h1.innerHTML = `Antal böcker inom varje genre`;
-    drawingSpace.append(h2);
+    drawingSpace.append(h1);
 
     async function getBooksAndGenre() {
         let { data, error } = await supabaseClient
@@ -149,9 +149,9 @@ function diagramGenre() {
 
 //diagram för böcker per månad
 function diagramBooksPerMonth() {
-    let h1 = document.createElement("h1");
-    h1.innerHTML = `Avslutade böcker per månad`;
-    grafHeader.append(h1);
+    let h2 = document.createElement("h2");
+    h2.innerHTML = `Avslutade böcker per månad`;
+    grafHeader.append(h2);
     prepareData(2026);
 
     let divYearsButton = document.createElement("div");
