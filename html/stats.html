@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book journal</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/stats.css">
+    <link rel="icon" type="image/png" href="../assets/pic/favicon.png">
+</head>
+
+<body>
+    <div id="header"></div>
+    <main id="main">
+        <!-- importera menyn från js-fil -->
+        <div id="bookMenu"></div>
+
+        <img class=" pic" id="flowerMain" src="../assets/pic/rankaFlower1.png">
+        <img class="pic" id="leafMain" src="../assets/pic/leafs1.png">
+        <img id="dragons" src="../assets/pic/dragons.png">
+
+        <div id="statContent">
+
+            <a href=" books.html" class="menyButton">Tillbaka till böckerna</a>
+
+            <div id="ButtonsStats">
+                <button id="genreButton">Genre</button>
+                <button id="monthButton">Books per month</button>
+            </div>
+            <div id="grafHeader"></div>
+            <div id="drawingSpace"></div>
+        </div>
+
+
+
+
+        </div>
+
+    </main>
+    <footer></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="../javascript/menu.js"></script>
+    <script src="../javascript/d3.v7.min.js"></script>
+    <script src="../javascript/stats.js"></script>
+
+</body>
+
+</html>

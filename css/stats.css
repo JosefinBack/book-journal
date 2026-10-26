@@ -1,0 +1,29 @@
+#ButtonsStats {
+    text-align: center;
+}
+
+
+
+#statContent {
+    width: 1000px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+svg {
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid lightgray;
+    background-color: rgb(220, 253, 220);
+}
+
+#drawingSpace {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 30px;
+    padding-bottom: 50px;
+}

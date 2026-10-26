@@ -1,8 +1,7 @@
 
-
 document.getElementById("bookMenu").innerHTML = `
 <div id="menuButtons">
-        <a href="index.html" class="menuButtonStyle">
+        <a href="books.html" class="menuButtonStyle">
             <p>My books</p>
         </a>
 
