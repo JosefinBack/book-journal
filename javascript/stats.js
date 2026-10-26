@@ -7,11 +7,11 @@ let supabaseClient = window.supabase.createClient(
 let main = document.getElementById("main");
 let drawingSpace = document.getElementById("drawingSpace");
 let grafHeader = document.getElementById("grafHeader");
+grafHeader.classList.add("grafheaderFlex");
 
 let buttonStatsDiv = document.getElementById("ButtonsStats");
 let genreButton = document.getElementById("genreButton");
 let monthButton = document.getElementById("monthButton");
-
 
 let currentYear = new Date().getFullYear();
 let selectedYear = currentYear;

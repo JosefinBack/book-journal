@@ -1,16 +1,40 @@
-#ButtonsStats {
-    text-align: center;
+/* #ButtonsStats {
+    display: flex;
+    justify-content: space-between;
+} */
+
+
+.grafheaderFlex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-
+#drawingContent {
+    display: flex;
+}
 
 #statContent {
     width: 1000px;
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     margin-left: auto;
     margin-right: auto;
+}
+
+#buttonMenuOnSide {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#menuOnSide {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    justify-content: space-between;
+    margin-top: 50px;
 }
 
 svg {
@@ -24,4 +48,10 @@ svg {
     justify-content: center;
     margin-bottom: 30px;
     padding-bottom: 50px;
+}
+
+
+#statsYears button.active {
+    background-color: #436448;
+    color: white;
 }
