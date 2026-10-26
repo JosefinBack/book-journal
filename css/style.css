@@ -410,7 +410,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
 }
 
-.buttonInForm {
+.buttonDesign {
     border: 1px solid var(--dark-green);
     padding: 10px 20px;
     border-radius: var(--border-radius-small);
@@ -419,7 +419,7 @@ body {
     font-size: var(--font-size-text);
 }
 
-.buttonInForm:hover {
+.buttonDesign:hover {
     background-color: var(--background-page);
     color: var(--dark-green);
     cursor: pointer;
