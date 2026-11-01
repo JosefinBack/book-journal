@@ -1,19 +1,19 @@
 
 document.getElementById("bookMenu").innerHTML = `
 <div id="menuButtons">
-        <a href="books.html" class="menuButtonStyle">
+        <a href="books.html" class="buttons">
             <p>My books</p>
         </a>
 
-        <a href="addBook.html" class="menuButtonStyle">
+        <a href="addBook.html" class="buttons">
             <p>Add a book</p>
         </a>
 
-        <button class="menuButtonStyle">
+        <a href=# class="buttons">
             <p>TBR</p>
         </button>
 
-        <a href="stats.html" class="menuButtonStyle">
+        <a href="stats.html" class="buttons">
             <p>Statistics</p>
         </a>
     </div>

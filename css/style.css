@@ -42,7 +42,7 @@
     /* fontsize */
     --font-size-smallText: 14px;
     --font-size-text: 16px;
-    --font-size-buttons: 14px;
+    --font-size-buttons: 16px;
 }
 
 a {
@@ -664,7 +664,7 @@ main {
 
 #menuButtons {
     display: flex;
-    gap: 10px;
+    gap: 20px;
     z-index: 10;
 }
 
@@ -778,11 +778,12 @@ main {
     padding: 5px 25px;
     border-radius: var(--border-radius-small);
     font-size: var(--font-size-buttons);
-    font-style: italic;
     background-color: var(--background-gradient-light);
-    border: 0.7px solid var(--dark-green);
+    border: none;
     font-family: "Cormorant Garamond";
     cursor: pointer;
+    letter-spacing: 0.07em;
+    font-weight: 700;
 }
 
 .buttons p {
