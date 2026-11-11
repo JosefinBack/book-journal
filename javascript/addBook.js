@@ -47,7 +47,7 @@ addBookButton.addEventListener("click", async function () {
     }
 
     if (bookWasSaved) {
-        window.location.href = "index.html";
+        window.location.href = "books.html";
     }
 });
 
