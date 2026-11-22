@@ -131,7 +131,7 @@ function makeBookCard(book) {
     bookRating.classList.add("bookRating");
 
     let star = document.createElement("img");
-    star.src = "/assets/pic/icons/goldstar.png";
+    star.src = "assets/pic/icons/goldstar.png";
     star.classList.add("ratingStar");
 
     let ratingText = document.createElement("span");
@@ -198,7 +198,7 @@ function createBookshelf(books) {
 
             let shelfIMG = document.createElement("img");
             shelfIMG.classList.add("allShelfs");
-            shelfIMG.src = "/assets/pic/shelf.png";
+            shelfIMG.src = "assets/pic/shelf.png";
 
             bigDIV.appendChild(currentRow);
             bigDIV.appendChild(shelfIMG);
@@ -444,7 +444,7 @@ function showBookInPopup() {
 
         if (imageName) {
             let feeling = document.createElement("img");
-            feeling.src = "/assets/pic/" + imageName;
+            feeling.src = "assets/pic/" + imageName;
             feeling.alt = emotion;
             feeling.classList.add("dragonEmotions");
 
