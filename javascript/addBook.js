@@ -78,7 +78,7 @@ deleteBookButton.addEventListener("click", async function () {
         console.error("Could not delete book:", error);
         return;
     }
-    window.location.href = "index.html";
+    window.location.href = "../index.html";
 });
 
 
