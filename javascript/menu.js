@@ -5,7 +5,7 @@ document.getElementById("bookMenu").innerHTML = `
             <p>My books</p>
         </a>
 
-        <a href="addBook.html" class="buttons">
+        <a href="html/addBook.html" class="buttons">
             <p>Add a book</p>
         </a>
 
@@ -13,7 +13,7 @@ document.getElementById("bookMenu").innerHTML = `
             <p>TBR</p>
         </button>
 
-        <a href="stats.html" class="buttons">
+        <a href="html/stats.html" class="buttons">
             <p>Statistics</p>
         </a>
     </div>
