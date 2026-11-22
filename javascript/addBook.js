@@ -53,7 +53,7 @@ addBookButton.addEventListener("click", async function () {
 
 cancelButton.addEventListener("click", function () {
     clearForm();
-    window.location.href = "index.html";
+    window.location.href = "../index.html";
 })
 
 deleteBookButton.addEventListener("click", async function () {
