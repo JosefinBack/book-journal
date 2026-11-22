@@ -539,10 +539,7 @@ h2 {
 
 .latestCoverDiv {
     position: relative;
-    width: 150px;
     height: 220px;
-    display: flex;
-    justify-content: center;
 }
 
 
@@ -573,7 +570,6 @@ h2 {
     font-size: 15px;
     letter-spacing: 2px;
     width: 263px;
-    text-align: center;
 }
 
 .latestTitle {
